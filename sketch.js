@@ -5,24 +5,20 @@ var r = new Rune({
     debug: false
 });
 
-/*c = 0.55191502449;
-p = 0.5;
+var donuts = [];
 
-var don = r.path(0, 666)
-    .moveTo(0,1)
-    .curveTo(c, 1, 1, c, 1, 0)
-    .curveTo(1, -c, c, -1, 0, -1)
-    .curveTo(-c, -1, -1, -c, -1, 0)
-    .curveTo(-1, c, -c, 1, 0, 1)
-    .closePath()
-    .moveTo(0*p,1*p)
-    .curveTo(c*p, 1*p, 1*p, c*p, 1*p, 0*p)
-    .curveTo(1*p, -c*p, c*p, -1*p, 0*p, -1*p)
-    .curveTo(-c*p, -1*p, -1*p, -c*p, -1*p, 0*p)
-    .curveTo(-1*p, c*p, -c*p, 1*p, 0*p, 1*p)
-  .fillRule("evenodd").fill("#c0e300").scale(200).stroke(false);*/
+var nx = 50;
+var ny = 50;
+var nrad = 12;
 
-var don = new Donut(333,200,120,0.5,"#c0e300",r);
+for(var i=0;i<nx; i++){
+    for(var j=0;j<ny; j++){
+        var don = new Donut(i*nrad*2,j*nrad*2,nrad,0.5,"#c0e300",r);
+        donuts.push(don);
+    }
+}
+
+
 
 //console.log(don);
 don.setHole(0.1);
@@ -30,8 +26,15 @@ don.setHole(0.1);
 var frameCount = 0;
 
 r.on('update', function() {
-  don.shape.move(0.1, 0, true);
-  don.setHole(Math.sin(frameCount*0.01));  
+  //don.shape.move(0.1, 0, true);
+  //don.setHole(Math.sin(frameCount*0.01));  
+    
+    for(var i=0;i<nx; i++){
+        for(var j=0;j<ny; j++){
+            //donuts[i+nx*j].setHole(Math.sin(frameCount*0.01));
+        }
+    }
+    
     frameCount++;
 });
 

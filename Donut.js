@@ -24,7 +24,7 @@ class Donut{
             .curveTo(-1*h, c*h, -c*h, 1*h, 0*h, 1*h)
             .fillRule("evenodd").fill(col).scale(rad).stroke(false);
         
-        console.log(this.shape);
+        //console.log(this.shape);
     }
     
     setHole(h){
