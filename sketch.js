@@ -5,6 +5,10 @@ var r = new Rune({
     debug: false
 });
 
+r.el.addEventListener('click', event => {
+  r.play();
+});
+
 var donuts = [];
 
 var nx = 50;
@@ -25,17 +29,18 @@ don.setHole(0.1);
 
 var frameCount = 0;
 
-r.on('update', function() {
-  //don.shape.move(0.1, 0, true);
-  //don.setHole(Math.sin(frameCount*0.01));  
-    
+r.on('update', function(mouse) {
+    console.log("yep!!");
     for(var i=0;i<nx; i++){
         for(var j=0;j<ny; j++){
-            //donuts[i+nx*j].setHole(Math.sin(frameCount*0.01));
+            donuts[i+nx*j].setHole(Math.sin(frameCount*0.5));
         }
     }
     
     frameCount++;
+    console.log("redessiné");
+    r.pause();
 });
 
-r.play()
+r.play();
+
