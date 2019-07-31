@@ -1,35 +1,39 @@
 var donuts = [];
 
-var nx = 50;
-var ny = 50;
-var nrad = 12;
+var nx = 60;
+var ny = 20;
+var rad = 20;
+var margin = 5;
 
 function setup() {
-    createCanvas(1200, 1200);
+    createCanvas(960, 540);
+    
+    rad = (width - ((nx-1) * margin)) / nx;
+    console.log(rad);
     
     for(var i=0;i<nx; i++){
         for(var j=0;j<ny; j++){
-            var don = new Donut(i*nrad*2,j*nrad*2,nrad);
+            var don = new Donut(
+                rad+i*rad*2 + i*margin,
+                rad+j*rad*2 + j*margin,
+                rad, 
+                0.5);
             donuts.push(don);
         }
     }
+    
+    
 }
 
 function draw() {
-    background(255);
+    background(200);
     
     for(var i=0;i<nx; i++){
         for(var j=0;j<ny; j++){
             var don = donuts[i+nx*j];
-            circle(don.x,don.y,nrad*0.5*(Math.sin(frameCount*0.3)+1));
+            don.h = noise(i*0.005+frameCount*0.1,j*0.005+frameCount*0.1);
+            don.draw();
         }
     }
 }
 
-class Donut{
-    constructor(x, y, rad){
-        this.x = x;
-        this.y = y;
-        this.rad = rad;
-    }
-}
