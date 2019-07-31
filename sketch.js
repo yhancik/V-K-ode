@@ -22,11 +22,6 @@ for(var i=0;i<nx; i++){
     }
 }
 
-
-
-//console.log(don);
-don.setHole(0.1);
-
 var frameCount = 0;
 
 r.on('update', function(mouse) {
@@ -42,3 +37,30 @@ r.on('update', function(mouse) {
 
 r.play();
 
+
+/*var donuts = [];
+
+var nx = 30;
+var ny = 30;
+var nrad = 12;
+
+for(var i=0;i<nx; i++){
+    for(var j=0;j<ny; j++){
+        var don = r.circle(i*nrad*2,j*nrad*2,nrad).stroke(false);
+        donuts.push(don);
+    }
+}
+
+var frameCount = 0;
+
+r.on('update', function() {
+    for(var i=0;i<nx; i++){
+        for(var j=0;j<ny; j++){
+            donuts[i+nx*j].radius(nrad*0.5*(Math.sin(frameCount*0.3)+1));
+        }
+    }
+    
+    frameCount++;
+});
+
+r.play();*/
