@@ -30,7 +30,6 @@ don.setHole(0.1);
 var frameCount = 0;
 
 r.on('update', function(mouse) {
-    console.log("yep!!");
     for(var i=0;i<nx; i++){
         for(var j=0;j<ny; j++){
             donuts[i+nx*j].setHole(Math.sin(frameCount*0.5));
@@ -38,7 +37,6 @@ r.on('update', function(mouse) {
     }
     
     frameCount++;
-    console.log("redessiné");
     r.pause();
 });
 
