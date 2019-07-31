@@ -31,7 +31,7 @@ function draw() {
     for(var i=0;i<nx; i++){
         for(var j=0;j<ny; j++){
             var don = donuts[i+nx*j];
-            don.h = noise(i*0.005+frameCount*0.1,j*0.005+frameCount*0.1);
+            don.h = noise(i*0.5+frameCount*0.05,j*0.5+frameCount*0.05);
             don.draw();
         }
     }
