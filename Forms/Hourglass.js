@@ -1,11 +1,11 @@
-class Squonut{
+class Hourglass{
     constructor(x, y, rad, h, col){
         this.x = x;
         this.y = y;
         this.rad = rad;
         this.h = h;
         this.col = col;
-        this.originalCol = "#ffeb00";
+        this.originalCol = "#ff009c";
     }
     
     draw(){
@@ -16,16 +16,12 @@ class Squonut{
         beginShape();
             vertex(-this.rad,-this.rad);
             vertex(this.rad,-this.rad);
+            vertex(0,(this.h-0.5)*this.rad);
+        endShape();
+        beginShape();
+            vertex(0,(0.5-this.h)*this.rad);
             vertex(this.rad,this.rad);
             vertex(-this.rad,this.rad);
-        
-            beginContour();
-                vertex(-this.rad*this.h,-this.rad*this.h);
-                vertex(-this.rad*this.h,this.rad*this.h);
-                vertex(this.rad*this.h,this.rad*this.h);
-                vertex(this.rad*this.h,-this.rad*this.h);
-            endContour();
-        
         endShape();
 
         pop();

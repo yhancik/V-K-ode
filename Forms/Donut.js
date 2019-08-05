@@ -7,11 +7,12 @@ class Donut{
         this.rad = rad;
         this.h = h;
         this.col = col;
+        this.originalCol = "#008fff";
     }
     
     draw(){
         noStroke();
-        fill("#ff009c");
+        fill(this.originalCol);
         push();
         translate(this.x, this.y);
         beginShape();
