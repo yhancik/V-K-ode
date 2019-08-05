@@ -13,7 +13,7 @@ function setup() {
     
     for(var i=0;i<nx; i++){
         for(var j=0;j<ny; j++){
-            var don = new Donut(
+            var don = new Squonut(
                 rad+i*rad*2 + i*margin,
                 rad+j*rad*2 + j*margin,
                 rad, 
