@@ -87,10 +87,13 @@ class Shapixel {
             fill("#008fff");
         }
 
+        const c = 0.55191502449;
+        
         push();
         translate(this.x, this.y);
         beginShape();
         vertex(0, this.rad);
+        
 
         bezierVertex(
             c * this.rad, this.rad,
