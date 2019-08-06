@@ -13,11 +13,13 @@ function setup() {
     
     for(var i=0;i<nx; i++){
         for(var j=0;j<ny; j++){
-            var don = new Berry(
+            var don = new Shapixel(
+                TILES,
                 rad+i*rad*2 + i*margin,
                 rad+j*rad*2 + j*margin,
-                rad, 
-                0.5);
+                rad,
+                0.5,
+                "");
             donuts.push(don);
         }
     }
