@@ -24,7 +24,7 @@ var sliderMargin;
 var inputMargin;
 
 function setup() {
-    createCanvas(960, 540);
+    createCanvas(960, 960);
     
     // nx
     // ----------------------------------
