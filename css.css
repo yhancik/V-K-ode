@@ -1,0 +1,14 @@
+body {
+    padding: 1em;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.controlSet {
+    display: inline-block;
+    font-size: 0.8em;
+    margin:1em;
+    vertical-align: top;
+}
+
+.control {}
