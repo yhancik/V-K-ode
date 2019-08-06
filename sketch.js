@@ -204,7 +204,7 @@ function draw() {
             else if(shape<5/6.0){
                 shixel.shape = BERRY;
             }
-            else if(shape<=1){
+            else{
                 shixel.shape = DIAMOND;
             }
                         
