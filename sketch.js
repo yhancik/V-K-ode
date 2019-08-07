@@ -41,7 +41,7 @@ let sketch = function (p) {
             for(var i=0;i<nx; i++){
                 for(var j=0;j<ny; j++){
                     var shixel = new Shapixel(
-                        p,
+                        p._userNode.className,
                         TILES,
                         rad+i*rad*2 + i*margin,
                         rad+j*rad*2 + j*margin,
@@ -178,8 +178,6 @@ let sketch = function (p) {
     }//end p.setup
 
     p.draw = function () {
-        
-        
 
         hNoiseSpaceScale = sliderHNoiseSpace.value();
         hNoiseTimeScale = sliderHNoiseTime.value();
@@ -189,11 +187,15 @@ let sketch = function (p) {
 
 
         p.background(255);
-
+        
+        if(p.frameCount%133 == 0){
+            console.log(p._userNode.className + " says: ");
+            console.log(tabShixels[0]);
+        }
         for(var i=0;i<nx; i++){
             for(var j=0;j<ny; j++){
                 var shixel = tabShixels[i+nx*j];
-
+                
                 shixel.h = p.noise(
                             seedH+i*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale,
                             seedH+j*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale
@@ -241,7 +243,7 @@ let sketch = function (p) {
         for(var i=0;i<nx; i++){
             for(var j=0;j<ny; j++){
                 var shixel = new Shapixel(
-                    p,
+                    p._userNode.className,
                     TILES,
                     rad+i*rad*2 + i*margin,
                     rad+j*rad*2 + j*margin,
@@ -261,8 +263,8 @@ let sketch = function (p) {
 };// end let sketch = function (p)
 
 // setting up the two contexts
-p5can = new p5(sketch, "p5can");
-p5svg = new p5(sketch, "p5svg");
+var p5can = new p5(sketch, "p5can");
+var p5svg = new p5(sketch, "p5svg");
 
 function saveSVG(){
     console.log("Shixels " + tabShixels.length)

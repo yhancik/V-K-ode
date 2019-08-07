@@ -6,8 +6,15 @@ const BERRY = 4;
 const DIAMOND = 5;
 
 class Shapixel {
-    constructor(p, shape, x, y, rad, h, col) {
-        this.p = p;
+    constructor(pClass, shape, x, y, rad, h, col) {
+        /*if(pClass == "svg"){
+            this.p = p5svg;
+        }
+        else{
+            this.p = p5can;
+        }*/
+        this.p = p5can;
+        this.p;
         this.shape = shape;
         this.x = x;
         this.y = y;
