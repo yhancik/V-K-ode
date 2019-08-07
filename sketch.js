@@ -24,7 +24,7 @@ var sliderMargin;
 var inputMargin;
 
 function setup() {
-    createCanvas(960, 960);
+    createCanvas(960, 960, SVG);
     
     // nx
     // ----------------------------------
@@ -230,4 +230,8 @@ function buildGrid(){
             tabShixels.push(shixel);
         }
     }
+}
+
+function mouseClicked(){
+    save();
 }
