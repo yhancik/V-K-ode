@@ -233,5 +233,9 @@ function buildGrid(){
 }
 
 function mouseClicked(){
+    //save();
+}
+
+function saveSVG(){
     save();
 }
