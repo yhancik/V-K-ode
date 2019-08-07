@@ -23,211 +23,236 @@ var inputNy;
 var sliderMargin;
 var inputMargin;
 
-function setup() {
-    createCanvas(960, 960);
-    
-    // nx
-    // ----------------------------------
-    sliderNx = select("#nx");
-    sliderNx.value(nx);
-    sliderNx.changed(function(){
-        nx = sliderNx.value();
-        inputNx.value(sliderNx.value());
-        buildGrid();
-    });
-    
-    inputNx = select("#nxtxt");
-    inputNx.value(nx);
-    inputNx.changed(function(){
-        nx = inputNx.value();
-        sliderNx.value(inputNx.value());
-        buildGrid();
-    });
-    
-    // ny
-    // ----------------------------------
-    sliderNy = select("#ny");
-    sliderNy.value(ny);
-    sliderNy.changed(function(){
-        ny = sliderNy.value();
-        inputNy.value(sliderNy.value());
-        buildGrid();
-    });
-    
-    inputNy = select("#nytxt");
-    inputNy.value(ny);
-    inputNy.changed(function(){
-        ny = inputNy.value();
-        sliderNy.value(inputNy.value());
-        buildGrid();
-    });
-    
-    // margin
-    // ----------------------------------
-    sliderMargin = select("#margin");
-    sliderMargin.value(margin);
-    sliderMargin.changed(function(){
-        margin = sliderMargin.value();
-        inputMargin.value(sliderMargin.value());
-        buildGrid();
-    });
-    
-    inputMargin = select("#margintxt");
-    inputMargin.value(margin);
-    inputMargin.changed(function(){
-        margin = inputMargin.value();
-        sliderMargin.value(inputMargin.value());
-        buildGrid();
-    });
-    
-    // H Noise Space
-    // ----------------------------------
-    sliderHNoiseSpace = select("#hNoiseSpace");
-    sliderHNoiseSpace.value(hNoiseSpaceScale);
-    sliderHNoiseSpace.changed(function(){
-        hNoiseSpaceScale = sliderHNoiseSpace.value();
-        inputHNoiseSpace.value(hNoiseSpaceScale);
-    });
-    
-    inputHNoiseSpace = select("#hNoiseSpacetxt");
-    inputHNoiseSpace.value(hNoiseSpaceScale);
-    inputHNoiseSpace.changed(function(){
-        hNoiseSpaceScale = inputHNoiseSpace.value();
+let sketch = function (p) {
+    p.setup = function () {
+        //createCanvas(960, 960);
+        
+        if (p.type === "SVG") {
+            p.createCanvas(960, 960, p.SVG);
+        }
+        else {
+            p.createCanvas(960, 960);
+        }
+
+        // nx
+        // ----------------------------------
+        sliderNx = p.select("#nx");
+        sliderNx.value(nx);
+        sliderNx.changed(function(){
+            nx = sliderNx.value();
+            inputNx.value(sliderNx.value());
+            p.buildGrid();
+        });
+
+        inputNx = p.select("#nxtxt");
+        inputNx.value(nx);
+        inputNx.changed(function(){
+            nx = inputNx.value();
+            sliderNx.value(inputNx.value());
+            p.buildGrid();
+        });
+
+        // ny
+        // ----------------------------------
+        sliderNy = p.select("#ny");
+        sliderNy.value(ny);
+        sliderNy.changed(function(){
+            ny = sliderNy.value();
+            inputNy.value(sliderNy.value());
+            p.buildGrid();
+        });
+
+        inputNy = p.select("#nytxt");
+        inputNy.value(ny);
+        inputNy.changed(function(){
+            ny = inputNy.value();
+            sliderNy.value(inputNy.value());
+            p.buildGrid();
+        });
+
+        // margin
+        // ----------------------------------
+        sliderMargin = p.select("#margin");
+        sliderMargin.value(margin);
+        sliderMargin.changed(function(){
+            margin = sliderMargin.value();
+            inputMargin.value(sliderMargin.value());
+            p.buildGrid();
+        });
+
+        inputMargin = p.select("#margintxt");
+        inputMargin.value(margin);
+        inputMargin.changed(function(){
+            margin = inputMargin.value();
+            sliderMargin.value(inputMargin.value());
+            p.buildGrid();
+        });
+
+        // H Noise Space
+        // ----------------------------------
+        sliderHNoiseSpace = p.select("#hNoiseSpace");
         sliderHNoiseSpace.value(hNoiseSpaceScale);
-    });
-    
-    // H Noise Time
-    // ----------------------------------
-    sliderHNoiseTime = select("#hNoiseTime");
-    sliderHNoiseTime.value(hNoiseTimeScale);
-    sliderHNoiseTime.changed(function(){
-        hNoiseTimeScale = sliderHNoiseTime.value();
-        inputHNoiseTime.value(hNoiseTimeScale);
-    });
-    
-    inputHNoiseTime = select("#hNoiseTimetxt");
-    inputHNoiseTime.value(hNoiseTimeScale);
-    inputHNoiseTime.changed(function(){
-        hNoiseTimeScale = inputHNoiseTime.value();
+        sliderHNoiseSpace.changed(function(){
+            hNoiseSpaceScale = sliderHNoiseSpace.value();
+            inputHNoiseSpace.value(hNoiseSpaceScale);
+        });
+
+        inputHNoiseSpace = p.select("#hNoiseSpacetxt");
+        inputHNoiseSpace.value(hNoiseSpaceScale);
+        inputHNoiseSpace.changed(function(){
+            hNoiseSpaceScale = inputHNoiseSpace.value();
+            sliderHNoiseSpace.value(hNoiseSpaceScale);
+        });
+
+        // H Noise Time
+        // ----------------------------------
+        sliderHNoiseTime = p.select("#hNoiseTime");
         sliderHNoiseTime.value(hNoiseTimeScale);
-    });
-    
-    // S Noise Space
-    // ----------------------------------
-    sliderSNoiseSpace = select("#sNoiseSpace");
-    sliderSNoiseSpace.value(sNoiseSpaceScale);
-    sliderSNoiseSpace.changed(function(){
-        sNoiseSpaceScale = sliderSNoiseSpace.value();
-        inputSNoiseSpace.value(sNoiseSpaceScale);
-    });
-    
-    inputSNoiseSpace = select("#sNoiseSpacetxt");
-    inputSNoiseSpace.value(sNoiseSpaceScale);
-    inputSNoiseSpace.changed(function(){
-        sNoiseSpaceScale = inputSNoiseSpace.value();
+        sliderHNoiseTime.changed(function(){
+            hNoiseTimeScale = sliderHNoiseTime.value();
+            inputHNoiseTime.value(hNoiseTimeScale);
+        });
+
+        inputHNoiseTime = p.select("#hNoiseTimetxt");
+        inputHNoiseTime.value(hNoiseTimeScale);
+        inputHNoiseTime.changed(function(){
+            hNoiseTimeScale = inputHNoiseTime.value();
+            sliderHNoiseTime.value(hNoiseTimeScale);
+        });
+
+        // S Noise Space
+        // ----------------------------------
+        sliderSNoiseSpace = p.select("#sNoiseSpace");
         sliderSNoiseSpace.value(sNoiseSpaceScale);
-    });
-    
-    // S Noise Time
-    // ----------------------------------
-    sliderSNoiseTime = select("#sNoiseTime");
-    sliderSNoiseTime.value(sNoiseTimeScale);
-    sliderSNoiseTime.changed(function(){
-        sNoiseTimeScale = sliderSNoiseTime.value();
-        inputSNoiseTime.value(sNoiseTimeScale);
-    });
-    
-    inputSNoiseTime = select("#sNoiseTimetxt");
-    inputSNoiseTime.value(sNoiseTimeScale);
-    inputSNoiseTime.changed(function(){
-        sNoiseTimeScale = inputSNoiseTime.value();
+        sliderSNoiseSpace.changed(function(){
+            sNoiseSpaceScale = sliderSNoiseSpace.value();
+            inputSNoiseSpace.value(sNoiseSpaceScale);
+        });
+
+        inputSNoiseSpace = p.select("#sNoiseSpacetxt");
+        inputSNoiseSpace.value(sNoiseSpaceScale);
+        inputSNoiseSpace.changed(function(){
+            sNoiseSpaceScale = inputSNoiseSpace.value();
+            sliderSNoiseSpace.value(sNoiseSpaceScale);
+        });
+
+        // S Noise Time
+        // ----------------------------------
+        sliderSNoiseTime = p.select("#sNoiseTime");
         sliderSNoiseTime.value(sNoiseTimeScale);
-    });
-    
-    rad = (width - ((nx-1) * margin)) / nx;
-    
-    for(var i=0;i<nx; i++){
-        for(var j=0;j<ny; j++){
-            var shixel = new Shapixel(
-                TILES,
-                rad+i*rad*2 + i*margin,
-                rad+j*rad*2 + j*margin,
-                rad,
-                0.5,
-                "");
-            tabShixels.push(shixel);
+        sliderSNoiseTime.changed(function(){
+            sNoiseTimeScale = sliderSNoiseTime.value();
+            inputSNoiseTime.value(sNoiseTimeScale);
+        });
+
+        inputSNoiseTime = p.select("#sNoiseTimetxt");
+        inputSNoiseTime.value(sNoiseTimeScale);
+        inputSNoiseTime.changed(function(){
+            sNoiseTimeScale = inputSNoiseTime.value();
+            sliderSNoiseTime.value(sNoiseTimeScale);
+        });
+
+        rad = (p.width - ((nx-1) * margin)) / nx;
+        console.log(p);
+        for(var i=0;i<nx; i++){
+            for(var j=0;j<ny; j++){
+                var shixel = new Shapixel(
+                    p,
+                    TILES,
+                    rad+i*rad*2 + i*margin,
+                    rad+j*rad*2 + j*margin,
+                    rad,
+                    0.5,
+                    "");
+                tabShixels.push(shixel);
+            }
         }
+
+        seedH = p.random(7777777);
+        seedS = p.random(7777777);
+    }//end p.setup
+
+    p.draw = function () {
+
+        hNoiseSpaceScale = sliderHNoiseSpace.value();
+        hNoiseTimeScale = sliderHNoiseTime.value();
+
+        sNoiseSpaceScale = sliderSNoiseSpace.value();
+        sNoiseTimeScale = sliderSNoiseTime.value();
+
+
+        p.background(255);
+
+        for(var i=0;i<nx; i++){
+            for(var j=0;j<ny; j++){
+                var shixel = tabShixels[i+nx*j];
+
+                shixel.h = p.noise(
+                            seedH+i*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale,
+                            seedH+j*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale
+                );
+
+                var shape = p.noise(
+                            seedS+i*sNoiseSpaceScale+p.frameCount*sNoiseTimeScale,
+                            seedS+j*sNoiseSpaceScale+p.frameCount*sNoiseTimeScale
+                );
+
+
+                if(shape<1/6.0){
+                    shixel.shape = SQUONUT;
+                }
+                else if(shape<2/6.0){
+                    shixel.shape = TILES;
+                }
+                else if(shape<3/6.0){
+                    shixel.shape = DONUT;
+                }
+                else if(shape<4/6.0){
+                    shixel.shape = HOURGLASS;
+                }
+                else if(shape<5/6.0){
+                    shixel.shape = BERRY;
+                }
+                else{
+                    shixel.shape = DIAMOND;
+                }
+
+                shixel.draw();
+            }
+        }
+    }//end p.draw
+
+    p.buildGrid = function (){
+        console.log(p);
+        rad = (p.width - ((nx-1) * margin)) / nx;
+
+        tabShixels = [];
+
+        for(var i=0;i<nx; i++){
+            for(var j=0;j<ny; j++){
+                var shixel = new Shapixel(
+                    p,
+                    TILES,
+                    rad+i*rad*2 + i*margin,
+                    rad+j*rad*2 + j*margin,
+                    rad,
+                    0.5,
+                    "");
+                tabShixels.push(shixel);
+            }
+        }
+    }//end p.buildGrid
+    
+    p.save_canvas = function() {
+        p.draw();  // <--- redraw using latest parameters
+        p.save();
     }
     
-    seedH = random(7777777);
-    seedS = random(7777777);
-}
+};// end let sketch = function (p)
 
-function draw() {
-    
-    hNoiseSpaceScale = sliderHNoiseSpace.value();
-    hNoiseTimeScale = sliderHNoiseTime.value();
+// setting up the two contexts
+p5can = new p5(sketch, "p5can");
+p5can.type = "CANVAS";
 
-    sNoiseSpaceScale = sliderSNoiseSpace.value();
-    sNoiseTimeScale = sliderSNoiseTime.value();
-    
-    
-    background(255);
-    
-    for(var i=0;i<nx; i++){
-        for(var j=0;j<ny; j++){
-            var shixel = tabShixels[i+nx*j];
-                        
-            shixel.h = noise(
-                        seedH+i*hNoiseSpaceScale+frameCount*hNoiseTimeScale,
-                        seedH+j*hNoiseSpaceScale+frameCount*hNoiseTimeScale
-            );
-            
-            var shape = noise(
-                        seedS+i*sNoiseSpaceScale+frameCount*sNoiseTimeScale,
-                        seedS+j*sNoiseSpaceScale+frameCount*sNoiseTimeScale
-            );
-            
-            
-            if(shape<1/6.0){
-                shixel.shape = SQUONUT;
-            }
-            else if(shape<2/6.0){
-                shixel.shape = TILES;
-            }
-            else if(shape<3/6.0){
-                shixel.shape = DONUT;
-            }
-            else if(shape<4/6.0){
-                shixel.shape = HOURGLASS;
-            }
-            else if(shape<5/6.0){
-                shixel.shape = BERRY;
-            }
-            else{
-                shixel.shape = DIAMOND;
-            }
-                        
-            shixel.draw();
-        }
-    }
-}
-
-function buildGrid(){
-    rad = (width - ((nx-1) * margin)) / nx;
-    
-    tabShixels = [];
-    
-    for(var i=0;i<nx; i++){
-        for(var j=0;j<ny; j++){
-            var shixel = new Shapixel(
-                TILES,
-                rad+i*rad*2 + i*margin,
-                rad+j*rad*2 + j*margin,
-                rad,
-                0.5,
-                "");
-            tabShixels.push(shixel);
-        }
-    }
-}
+p5svg = new p5(sketch, "p5svg");
+p5svg.type = "SVG";

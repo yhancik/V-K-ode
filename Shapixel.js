@@ -6,7 +6,8 @@ const BERRY = 4;
 const DIAMOND = 5;
 
 class Shapixel {
-    constructor(shape, x, y, rad, h, col) {
+    constructor(p, shape, x, y, rad, h, col) {
+        this.p = p;
         this.shape = shape;
         this.x = x;
         this.y = y;
@@ -40,188 +41,188 @@ class Shapixel {
     }
 
     berry() {
-        noStroke();
+        this.p.noStroke();
 
         if (this.col != "") {
-            fill(this.col);
+            this.p.fill(this.col);
         } else {
-            fill("#ff1c00");
+            this.p.fill("#ff1c00");
         }
 
-        push();
-        translate(this.x, this.y);
+        this.p.push();
+        this.p.translate(this.x, this.y);
         //fix, because the circles get out of the frame
-        circle(-0.5 * this.rad, -0.5 * this.rad, (0.5 + this.h) * this.rad);
-        circle(0.5 * this.rad, -0.5 * this.rad, (0.5 + this.h) * this.rad);
-        circle(-0.5 * this.rad, 0.5 * this.rad, (0.5 + this.h) * this.rad);
-        circle(0.5 * this.rad, 0.5 * this.rad, (0.5 + this.h) * this.rad);
-        pop();
+        this.p.circle(-0.5 * this.rad, -0.5 * this.rad, (0.5 + this.h) * this.rad);
+        this.p.circle(0.5 * this.rad, -0.5 * this.rad, (0.5 + this.h) * this.rad);
+        this.p.circle(-0.5 * this.rad, 0.5 * this.rad, (0.5 + this.h) * this.rad);
+        this.p.circle(0.5 * this.rad, 0.5 * this.rad, (0.5 + this.h) * this.rad);
+        this.p.pop();
     }
 
-    diamond() {
-        noStroke();
+    diamond(p) {
+        this.p.noStroke();
 
         if (this.col != "") {
-            fill(this.col);
+            this.p.fill(this.col);
         } else {
-            fill("#0036c4");
+            this.p.fill("#0036c4");
         }
 
-        push();
-        translate(this.x, this.y);
-        beginShape();
-        vertex(0, -this.rad + (0.5 * this.rad * this.h));
-        vertex(this.rad - (0.5 * this.rad * this.h), 0);
-        vertex(0, this.rad - (0.5 * this.rad * this.h));
-        vertex(-this.rad + (0.5 * this.rad * this.h), 0);
-        endShape();
-        pop();
+        this.p.push();
+        this.p.translate(this.x, this.y);
+        this.p.beginShape();
+        this.p.vertex(0, -this.rad + (0.5 * this.rad * this.h));
+        this.p.vertex(this.rad - (0.5 * this.rad * this.h), 0);
+        this.p.vertex(0, this.rad - (0.5 * this.rad * this.h));
+        this.p.vertex(-this.rad + (0.5 * this.rad * this.h), 0);
+        this.p.endShape();
+        this.p.pop();
     }
 
-    donut() {
-        noStroke();
+    donut(p) {
+        this.p.noStroke();
         
         if (this.col != "") {
-            fill(this.col);
+            this.p.fill(this.col);
         } else {
-            fill("#008fff");
+            this.p.fill("#008fff");
         }
 
         const c = 0.55191502449;
         
-        push();
-        translate(this.x, this.y);
-        beginShape();
-        vertex(0, this.rad);
+        this.p.push();
+        this.p.translate(this.x, this.y);
+        this.p.beginShape();
+        this.p.vertex(0, this.rad);
         
 
-        bezierVertex(
+        this.p.bezierVertex(
             c * this.rad, this.rad,
             this.rad, c * this.rad,
             this.rad, 0
         );
 
-        bezierVertex(
+        this.p.bezierVertex(
             this.rad, -c * this.rad,
             c * this.rad, -this.rad,
             0, -this.rad
         );
 
-        bezierVertex(-c * this.rad, -this.rad, -this.rad, -c * this.rad, -this.rad, 0);
+        this.p.bezierVertex(-c * this.rad, -this.rad, -this.rad, -c * this.rad, -this.rad, 0);
 
-        bezierVertex(-this.rad, c * this.rad, -c * this.rad, this.rad,
+        this.p.bezierVertex(-this.rad, c * this.rad, -c * this.rad, this.rad,
             0, this.rad
         );
 
 
-        beginContour();
-        vertex(0, this.rad * this.h);
+        this.p.beginContour();
+        this.p.vertex(0, this.rad * this.h);
 
-        bezierVertex(-c * this.rad * this.h, this.rad * this.h, -this.rad * this.h, c * this.rad * this.h, -this.rad * this.h, 0);
+        this.p.bezierVertex(-c * this.rad * this.h, this.rad * this.h, -this.rad * this.h, c * this.rad * this.h, -this.rad * this.h, 0);
 
-        bezierVertex(-this.rad * this.h, -c * this.rad * this.h, -c * this.rad * this.h, -this.rad * this.h,
+        this.p.bezierVertex(-this.rad * this.h, -c * this.rad * this.h, -c * this.rad * this.h, -this.rad * this.h,
             0, -this.rad * this.h
         );
 
-        bezierVertex(
+        this.p.bezierVertex(
             c * this.rad * this.h, -this.rad * this.h,
             this.rad * this.h, -c * this.rad * this.h,
             this.rad * this.h, 0
         );
 
-        bezierVertex(
+        this.p.bezierVertex(
             this.rad * this.h, c * this.rad * this.h,
             c * this.rad * this.h, this.rad * this.h,
             0, this.rad * this.h
         );
 
-        endContour();
+        this.p.endContour();
 
-        endShape();
+        this.p.endShape();
 
-        pop();
+        this.p.pop();
     }
 
-    hourglass() {
-        noStroke();
+    hourglass(p) {
+        this.p.noStroke();
         
         if (this.col != "") {
-            fill(this.col);
+            this.p.fill(this.col);
         } else {
-            fill("#ff009c");
+            this.p.fill("#ff009c");
         }
 
-        push();
-        translate(this.x, this.y);
-        beginShape();
-        vertex(-this.rad, -this.rad);
-        vertex(this.rad, -this.rad);
-        vertex(0, (this.h - 0.5) * this.rad);
-        endShape();
-        beginShape();
-        vertex(0, (0.5 - this.h) * this.rad);
-        vertex(this.rad, this.rad);
-        vertex(-this.rad, this.rad);
-        endShape();
+        this.p.push();
+        this.p.translate(this.x, this.y);
+        this.p.beginShape();
+        this.p.vertex(-this.rad, -this.rad);
+        this.p.vertex(this.rad, -this.rad);
+        this.p.vertex(0, (this.h - 0.5) * this.rad);
+        this.p.endShape();
+        this.p.beginShape();
+        this.p.vertex(0, (0.5 - this.h) * this.rad);
+        this.p.vertex(this.rad, this.rad);
+        this.p.vertex(-this.rad, this.rad);
+        this.p.endShape();
 
-        pop();
+        this.p.pop();
     }
 
-    squonut() {
-        noStroke();
+    squonut(p) {
+        this.p.noStroke();
         
         if (this.col != "") {
-            fill(this.col);
+            this.p.fill(this.col);
         } else {
-            fill("#ffeb00");
+            this.p.fill("#ffeb00");
         }
 
-        push();
-        translate(this.x, this.y);
-        beginShape();
-        vertex(-this.rad, -this.rad);
-        vertex(this.rad, -this.rad);
-        vertex(this.rad, this.rad);
-        vertex(-this.rad, this.rad);
+        this.p.push();
+        this.p.translate(this.x, this.y);
+        this.p.beginShape();
+        this.p.vertex(-this.rad, -this.rad);
+        this.p.vertex(this.rad, -this.rad);
+        this.p.vertex(this.rad, this.rad);
+        this.p.vertex(-this.rad, this.rad);
 
-        beginContour();
-        vertex(-this.rad * this.h, -this.rad * this.h);
-        vertex(-this.rad * this.h, this.rad * this.h);
-        vertex(this.rad * this.h, this.rad * this.h);
-        vertex(this.rad * this.h, -this.rad * this.h);
-        endContour();
+        this.p.beginContour();
+        this.p.vertex(-this.rad * this.h, -this.rad * this.h);
+        this.p.vertex(-this.rad * this.h, this.rad * this.h);
+        this.p.vertex(this.rad * this.h, this.rad * this.h);
+        this.p.vertex(this.rad * this.h, -this.rad * this.h);
+        this.p.endContour();
 
-        endShape();
+        this.p.endShape();
 
-        pop();
+        this.p.pop();
     }
 
-    tiles() {
-        noStroke();
+    tiles(p) {
+        this.p.noStroke();
         
         if (this.col != "") {
-            fill(this.col);
+            this.p.fill(this.col);
         } else {
-            fill("#00d400");
+            this.p.fill("#00d400");
         }
 
-        push();
-        translate(this.x, this.y);
-        beginShape();
-        vertex((0.5 - this.h) * this.rad, -this.rad);
-        vertex(this.rad, -this.rad);
-        vertex(this.rad, (this.h - 0.5) * this.rad);
-        vertex((0.5 - this.h) * this.rad, (this.h - 0.5) * this.rad);
-        endShape();
-        beginShape();
-        vertex((this.h - 0.5) * this.rad, (0.5 - this.h) * this.rad);
-        vertex(-this.rad, (0.5 - this.h) * this.rad);
-        vertex(-this.rad, this.rad);
-        vertex((this.h - 0.5) * this.rad, this.rad);
+        this.p.push();
+        this.p.translate(this.x, this.y);
+        this.p.beginShape();
+        this.p.vertex((0.5 - this.h) * this.rad, -this.rad);
+        this.p.vertex(this.rad, -this.rad);
+        this.p.vertex(this.rad, (this.h - 0.5) * this.rad);
+        this.p.vertex((0.5 - this.h) * this.rad, (this.h - 0.5) * this.rad);
+        this.p.endShape();
+        this.p.beginShape();
+        this.p.vertex((this.h - 0.5) * this.rad, (0.5 - this.h) * this.rad);
+        this.p.vertex(-this.rad, (0.5 - this.h) * this.rad);
+        this.p.vertex(-this.rad, this.rad);
+        this.p.vertex((this.h - 0.5) * this.rad, this.rad);
 
-        endShape();
+        this.p.endShape();
 
-        pop();
+        this.p.pop();
     }
 
 
