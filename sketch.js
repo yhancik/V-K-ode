@@ -1,7 +1,7 @@
 var tabShixels = [];
 
-var nx = 60;
-var ny = 20;
+var nx = 6;
+var ny = 2;
 var rad = 20;
 var margin = 2;
 
@@ -28,12 +28,12 @@ let sketch = function (p) {
 
         if (p._userNode.className == "svg") {
             console.log("p.createCanvas(960, 960, p.SVG)");
-            p.createCanvas(960, 960, p.SVG);
+            p.createCanvas(960, 600, p.SVG);
             p.noLoop();
         }
         
         else {
-            p.createCanvas(960, 960);
+            p.createCanvas(960, 600, p.SVG);
                 
             rad = (p.width - ((nx-1) * margin)) / nx;
 
@@ -269,6 +269,11 @@ let sketch = function (p) {
 var p5can = new p5(sketch, "p5can");
 //var p5svg = new p5(sketch, "p5svg");
 
+function saveDefault(){
+    p5can.draw();
+    p5can.save();
+}
+
 function saveSVG(){
     console.log("Creation new svg canvas ("+Date.now()+")");
     var p5svg = new p5(sketch, "p5svg");
@@ -284,8 +289,8 @@ function saveSVG(){
     //p5can.save_canvas();
     console.log("Saved! ("+Date.now()+")");
     
-    //console.log("Removing SVG canvas!");
-    //p5svg.remove();
+    console.log("Removing SVG canvas!");
+    p5svg.remove();
 }
 
 function transferShixels(tab, context){
