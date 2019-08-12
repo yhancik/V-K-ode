@@ -25,8 +25,6 @@ var inputMargin;
 
 let sketch = function (p) {
     p.setup = function () {
-        //createCanvas(960, 960);
-        
 
         if (p._userNode.className == "svg") {
             console.log("p.createCanvas(960, 960, p.SVG)");
@@ -188,10 +186,11 @@ let sketch = function (p) {
 
         p.background(255);
         
-        if(p.frameCount%133 == 0){
+        /*if(p.frameCount%133 == 0){
             console.log(p._userNode.className + " says: ");
             console.log(tabShixels[0]);
-        }
+        }*/
+        
         for(var i=0;i<nx; i++){
             for(var j=0;j<ny; j++){
                 var shixel = tabShixels[i+nx*j];
@@ -264,15 +263,35 @@ let sketch = function (p) {
 
 // setting up the two contexts
 var p5can = new p5(sketch, "p5can");
-var p5svg = new p5(sketch, "p5svg");
+//var p5svg = new p5(sketch, "p5svg");
 
 function saveSVG(){
-    console.log("Shixels " + tabShixels.length)
     console.log("Creation new svg canvas");
-    //p5svg = new p5(sketch, "p5svg");
+    var p5svg = new p5(sketch, "p5svg");
+    
+    console.log("Copying shixels");
+    var tabShixelsSVG = transferShixels(tabShixels,p5svg);
+    
     console.log("Saving svg...");
     p5svg.save_canvas();
-    p5can.save_canvas();
-    console.log("Shixels après " + tabShixels.length)
-    //p5svg.remove();
+    //p5can.save_canvas();
+    console.log("Saved!");
+    p5svg.remove();
+}
+
+function transferShixels(tab, context){
+    var nuTab = [];
+    
+    console.log("FUNCTION transferShixels");
+    console.log(context);
+    console.log(context._userNode.className);
+    
+    tab.forEach(function(shixel) {
+        nuTab.push(shixel.copy(context._userNode.className));
+    });
+    
+    console.log(nuTab);
+    
+    return nuTab;
+    
 }

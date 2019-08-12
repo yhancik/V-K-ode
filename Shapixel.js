@@ -6,21 +6,33 @@ const BERRY = 4;
 const DIAMOND = 5;
 
 class Shapixel {
-    constructor(pClass, shape, x, y, rad, h, col) {
-        /*if(pClass == "svg"){
-            this.p = p5svg;
+    constructor(contextName, shape, x, y, rad, h, col) {
+        if(contextName == "svg"){
         }
         else{
             this.p = p5can;
-        }*/
-        this.p = p5can;
-        this.p;
+        }
+        //this.p = p5can;
+        //this.p;
         this.shape = shape;
         this.x = x;
         this.y = y;
         this.rad = rad;
         this.h = h;
         this.col = col;
+    }
+    
+    copy(contextName){
+        console.log(contextName);
+        return new Shapixel(
+            contextName,
+            this.shape,
+            this.x,
+            this.y,
+            this.rad,
+            this.h,
+            this.col
+        );
     }
 
     draw() {
