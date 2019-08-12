@@ -274,16 +274,16 @@ function saveDefault(){
     p5can.save();
 }
 
-function saveSVG(){
+function saveToSVG(){
     
-    var p5svg = p.createGraphics(960,600);
+    /*var p5svg = p.createGraphics(960,600);
     
     p5svg.fill(0);
     p5svg.circle(p.width*0.5,p.height*0.5,p.height*0.3);
     
-    p5svg.save();
+    p5svg.save();*/
     
-    /*console.log("Creation new svg canvas ("+Date.now()+")");
+    console.log("Creation new svg canvas ("+Date.now()+")");
     var p5svg = new p5(sketch, "p5svg");
     
     console.log("Copying shixels ("+Date.now()+")");
@@ -293,12 +293,12 @@ function saveSVG(){
     p5svg.draw(tabShixelsSVG);
     
     console.log("Saving svg... ("+Date.now()+")");
-    p5svg.save();
+    p5svg.saveSVG(p5svg.elt);
     //p5can.save_canvas();
     console.log("Saved! ("+Date.now()+")");
     
     console.log("Removing SVG canvas!");
-    p5svg.remove();*/
+    p5svg.remove();
 }
 
 function transferShixels(tab, context){
