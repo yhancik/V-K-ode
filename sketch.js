@@ -33,7 +33,7 @@ let sketch = function (p) {
         }
         
         else {
-            p.createCanvas(960, 600, p.SVG);
+            p.createCanvas(960, 600);
                 
             rad = (p.width - ((nx-1) * margin)) / nx;
 
@@ -275,7 +275,15 @@ function saveDefault(){
 }
 
 function saveSVG(){
-    console.log("Creation new svg canvas ("+Date.now()+")");
+    
+    var p5svg = p.createGraphics(960,600);
+    
+    p5svg.fill(0);
+    p5svg.circle(p.width*0.5,p.height*0.5,p.height*0.3);
+    
+    p5svg.save();
+    
+    /*console.log("Creation new svg canvas ("+Date.now()+")");
     var p5svg = new p5(sketch, "p5svg");
     
     console.log("Copying shixels ("+Date.now()+")");
@@ -290,7 +298,7 @@ function saveSVG(){
     console.log("Saved! ("+Date.now()+")");
     
     console.log("Removing SVG canvas!");
-    p5svg.remove();
+    p5svg.remove();*/
 }
 
 function transferShixels(tab, context){
