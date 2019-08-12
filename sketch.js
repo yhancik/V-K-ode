@@ -29,6 +29,7 @@ let sketch = function (p) {
         if (p._userNode.className == "svg") {
             console.log("p.createCanvas(960, 960, p.SVG)");
             p.createCanvas(960, 960, p.SVG);
+            p.noLoop();
         }
         
         else {
@@ -39,7 +40,7 @@ let sketch = function (p) {
             for(var i=0;i<nx; i++){
                 for(var j=0;j<ny; j++){
                     var shixel = new Shapixel(
-                        p._userNode.className,
+                        p,
                         TILES,
                         rad+i*rad*2 + i*margin,
                         rad+j*rad*2 + j*margin,
@@ -175,8 +176,11 @@ let sketch = function (p) {
         }
     }//end p.setup
 
-    p.draw = function () {
-
+    p.draw = function (tab = tabShixels) {
+        if (p._userNode.className == "svg") {
+            console.log("- Drawing SVG");
+        }
+        
         hNoiseSpaceScale = sliderHNoiseSpace.value();
         hNoiseTimeScale = sliderHNoiseTime.value();
 
@@ -193,7 +197,7 @@ let sketch = function (p) {
         
         for(var i=0;i<nx; i++){
             for(var j=0;j<ny; j++){
-                var shixel = tabShixels[i+nx*j];
+                var shixel = tab[i+nx*j];
                 
                 shixel.h = p.noise(
                             seedH+i*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale,
@@ -231,6 +235,11 @@ let sketch = function (p) {
         
         p.fill(0);
         p.circle(p.width*0.5,p.height*0.5,p.height*0.3);
+        
+        if (p._userNode.className == "svg") {
+            console.log("- Drawing SVG: DONE! Now saving first");
+            p.save();
+        }
     }//end p.draw
 
     p.buildGrid = function (){
@@ -242,7 +251,7 @@ let sketch = function (p) {
         for(var i=0;i<nx; i++){
             for(var j=0;j<ny; j++){
                 var shixel = new Shapixel(
-                    p._userNode.className,
+                    p,
                     TILES,
                     rad+i*rad*2 + i*margin,
                     rad+j*rad*2 + j*margin,
@@ -254,11 +263,6 @@ let sketch = function (p) {
         }
     }//end p.buildGrid
     
-    p.save_canvas = function() {
-        p.draw();  // <--- redraw using latest parameters
-        p.save();
-    }
-    
 };// end let sketch = function (p)
 
 // setting up the two contexts
@@ -266,28 +270,29 @@ var p5can = new p5(sketch, "p5can");
 //var p5svg = new p5(sketch, "p5svg");
 
 function saveSVG(){
-    console.log("Creation new svg canvas");
+    console.log("Creation new svg canvas ("+Date.now()+")");
     var p5svg = new p5(sketch, "p5svg");
     
-    console.log("Copying shixels");
+    console.log("Copying shixels ("+Date.now()+")");
     var tabShixelsSVG = transferShixels(tabShixels,p5svg);
     
-    console.log("Saving svg...");
-    p5svg.save_canvas();
+    console.log("Redraw ("+Date.now()+")");
+    p5svg.draw(tabShixelsSVG);
+    
+    console.log("Saving svg... ("+Date.now()+")");
+    p5svg.save();
     //p5can.save_canvas();
-    console.log("Saved!");
-    p5svg.remove();
+    console.log("Saved! ("+Date.now()+")");
+    
+    //console.log("Removing SVG canvas!");
+    //p5svg.remove();
 }
 
 function transferShixels(tab, context){
     var nuTab = [];
-    
-    console.log("FUNCTION transferShixels");
-    console.log(context);
-    console.log(context._userNode.className);
-    
+        
     tab.forEach(function(shixel) {
-        nuTab.push(shixel.copy(context._userNode.className));
+        nuTab.push(shixel.copy(context));
     });
     
     console.log(nuTab);

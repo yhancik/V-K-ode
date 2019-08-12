@@ -6,14 +6,14 @@ const BERRY = 4;
 const DIAMOND = 5;
 
 class Shapixel {
-    constructor(contextName, shape, x, y, rad, h, col) {
-        if(contextName == "svg"){
+    constructor(p, shape, x, y, rad, h, col) {
+        /*if(contextName == "svg"){
         }
         else{
             this.p = p5can;
-        }
+        }*/
         //this.p = p5can;
-        //this.p;
+        this.p = p;
         this.shape = shape;
         this.x = x;
         this.y = y;
@@ -22,10 +22,9 @@ class Shapixel {
         this.col = col;
     }
     
-    copy(contextName){
-        console.log(contextName);
+    copy(context){
         return new Shapixel(
-            contextName,
+            context,
             this.shape,
             this.x,
             this.y,
