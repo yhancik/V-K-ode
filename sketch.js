@@ -1,11 +1,11 @@
 var tabShixels = [];
 
-var nx = 48;
+/*var nx = 48;
 var ny = 24;
 var rad = 20;
 var margin = 4;
 var mixedup = false;
-var blanks = false;
+var blanks = false;*/
 var bwMode = false;
 var negativeMode = false;
 var bgColour = "#FFF";
@@ -32,12 +32,26 @@ var inputNy;
 var sliderMargin;
 var inputMargin;
 
+var grid;
+
 let sketch = function (p) {
     p.setup = function () {
 
         p.createCanvas(960, 600);
-    
-        p.buildGrid();
+        
+        grid = new Grid(
+            p, {
+            horizontalElts: 48,
+            verticalElts: 12,
+            margin: 4,
+            mixedup: false,
+            blanks: false
+            }
+        )
+        
+        grid.build();
+        console.log(grid);
+        //p.buildGrid();
 
         seedH = p.random(7777777);
         seedS = p.random(7777777);
@@ -46,73 +60,77 @@ let sketch = function (p) {
         // nx
         // ----------------------------------
         sliderNx = p.select("#nx");
-        sliderNx.value(nx);
+        sliderNx.value(grid.nx);
         sliderNx.changed(function(){
-            nx = sliderNx.value();
+            //nx = sliderNx.value();
             inputNx.value(sliderNx.value());
-            p.buildGrid();
+            grid.build({horizontalElts:sliderNx.value()});
         });
 
         inputNx = p.select("#nxtxt");
-        inputNx.value(nx);
+        inputNx.value(grid.ny);
         inputNx.changed(function(){
-            nx = inputNx.value();
+            //nx = inputNx.value();
             sliderNx.value(inputNx.value());
-            p.buildGrid();
+            grid.build({horizontalElts:inputNx.value()});
         });
 
         // ny
         // ----------------------------------
         sliderNy = p.select("#ny");
-        sliderNy.value(ny);
+        sliderNy.value(grid.ny);
         sliderNy.changed(function(){
-            ny = sliderNy.value();
+            //ny = sliderNy.value();
             inputNy.value(sliderNy.value());
-            p.buildGrid();
+            grid.build({verticalElts:sliderNy.value()});
         });
 
         inputNy = p.select("#nytxt");
-        inputNy.value(ny);
+        inputNy.value(grid.ny);
         inputNy.changed(function(){
-            ny = inputNy.value();
+            //ny = inputNy.value();
             sliderNy.value(inputNy.value());
-            p.buildGrid();
+            grid.build({verticalElts:inputNy.value()});
         });
 
         // margin
         // ----------------------------------
         sliderMargin = p.select("#margin");
-        sliderMargin.value(margin);
+        sliderMargin.value(grid.margin);
         sliderMargin.changed(function(){
-            margin = sliderMargin.value();
+            //margin = sliderMargin.value();
             inputMargin.value(sliderMargin.value());
-            p.buildGrid();
+            grid.build({margin:sliderMargin.value()});
         });
 
         inputMargin = p.select("#margintxt");
-        inputMargin.value(margin);
+        inputMargin.value(grid.margin);
         inputMargin.changed(function(){
-            margin = inputMargin.value();
+            //margin = inputMargin.value();
             sliderMargin.value(inputMargin.value());
-            p.buildGrid();
+            grid.build({margin:inputMargin.value()});
         });
         
         // mixedup
         // ----------------------------------
         checkboxMixedup = p.select("#mixedup");
-        checkboxMixedup.checked(mixedup);
+        checkboxMixedup.checked(grid.mixedup);
         checkboxMixedup.changed(function(){
-            mixedup = checkboxMixedup.checked();
-            p.buildGrid();
+            //console.log(checkboxMixedup.checked());
+            //mixedup = checkboxMixedup.checked();
+            //p.buildGrid();
+            grid.build({mixedup:checkboxMixedup.checked()});
         });
         
         // blanks
         // ----------------------------------
         checkboxBlanks = p.select("#blanks");
-        checkboxBlanks.checked(blanks);
+        checkboxBlanks.checked(grid.blanks);
         checkboxBlanks.changed(function(){
-            blanks = checkboxBlanks.checked();
-            p.buildGrid();
+            console.log(checkboxBlanks.checked());
+            //blanks = checkboxBlanks.checked();
+            //p.buildGrid();
+            grid.build({blanks:checkboxBlanks.checked()});
         });
         
         // bwMode
@@ -121,10 +139,10 @@ let sketch = function (p) {
         checkboxBW.checked(bwMode);
         checkboxBW.changed(function(){
             bwMode = checkboxBW.checked();
-            p.buildGrid();
+            grid.build();
         });
         
-        // bwMode
+        // negativeMode
         // ----------------------------------
         checkboxNegative = p.select("#negative");
         checkboxNegative.checked(negativeMode);
@@ -136,8 +154,7 @@ let sketch = function (p) {
             else{
                 bgColour = "#FFF";
             }
-            p.buildGrid();
-            //p.buildGrid();
+            grid.build();
         });
 
         // H Noise Space
@@ -277,61 +294,14 @@ let sketch = function (p) {
         sNoiseFalloff = sliderSNoiseFalloff.value();
 
         g.background(bgColour);
+        grid.draw(g);
              
-        for(var i=0;i<nx; i++){
-            for(var j=0;j<ny; j++){
-                var shixel = tabShixels[i+nx*j];
-                
-                p.noiseDetail(hNoiseLOD, hNoiseFalloff);
-                shixel.h = p.noise(
-                    seedH+i*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale,
-                    seedH+j*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale
-                );
-                
-                p.noiseDetail(sNoiseLOD, sNoiseFalloff);
-                var shape = p.noise(
-                    seedS+i*sNoiseSpaceScale+p.frameCount*sNoiseTimeScale,
-                    seedS+j*sNoiseSpaceScale+p.frameCount*sNoiseTimeScale
-                );
-                
-                // number of possible shapes
-                // "blanks" are an additional shape
-                if(blanks){
-                    shape = 7.0/6.0 * shape;
-                }
-
-                if(shape<=1/6.0){
-                    shixel.shape = SQUONUT;
-                }
-                else if(shape<=2/6.0){
-                    shixel.shape = TILES;
-                }
-                else if(shape<=3/6.0){
-                    shixel.shape = DONUT;
-                }
-                else if(shape<=4/6.0){
-                    shixel.shape = HOURGLASS;
-                }
-                else if(shape<=5/6.0){
-                    shixel.shape = BERRY;
-                }
-                else if(shape<=6/6.0){
-                    shixel.shape = DIAMOND;
-                }
-                else{
-                    shixel.shape = BLANK;
-                }
-
-                shixel.draw(g);
-            }
-        }
+        
 
     }//end p.draw
 
-    p.buildGrid = function (){
+    /*p.buildGrid = function (){
         rad = (p.width - ((nx-1) * margin)) / (nx*2);
-        console.log(rad);
-        console.log(nx*rad*2 + (nx-1)*margin);
         
         tabShixels = [];
         
@@ -374,6 +344,7 @@ let sketch = function (p) {
         }
         
     }//end p.buildGrid
+    */
     
 };// end let sketch = function (p)
 
