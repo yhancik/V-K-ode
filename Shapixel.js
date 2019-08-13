@@ -7,12 +7,6 @@ const DIAMOND = 5;
 
 class Shapixel {
     constructor(p, shape, x, y, rad, h, col) {
-        /*if(contextName == "svg"){
-        }
-        else{
-            this.p = p5can;
-        }*/
-        //this.p = p5can;
         this.p = p;
         this.shape = shape;
         this.x = x;
@@ -22,18 +16,6 @@ class Shapixel {
         this.col = col;
     }
     
-    copy(context){
-        return new Shapixel(
-            context,
-            this.shape,
-            this.x,
-            this.y,
-            this.rad,
-            this.h,
-            this.col
-        );
-    }
-
     draw(g=this.p) {
         switch (this.shape) {
             case SQUONUT:

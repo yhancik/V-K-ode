@@ -7,9 +7,13 @@ var margin = 2;
 
 var hNoiseSpaceScale = 0.001;
 var hNoiseTimeScale = 0.001;
+var hNoiseLOD = 4.0;
+var hNoiseFalloff = 0.5;
 
 var sNoiseSpaceScale = 0.001;
 var sNoiseTimeScale = 0.001;
+var sNoiseLOD = 4.0;
+var sNoiseFalloff = 0.5;
 
 var seedH;
 var seedS;
@@ -119,6 +123,36 @@ let sketch = function (p) {
             hNoiseTimeScale = inputHNoiseTime.value();
             sliderHNoiseTime.value(hNoiseTimeScale);
         });
+        
+        // H Noise Detail
+        // ----------------------------------
+        sliderHNoiseLOD = p.select("#hNoiseLOD");
+        sliderHNoiseLOD.value(hNoiseLOD);
+        sliderHNoiseLOD.changed(function(){
+            hNoiseLOD = sliderHNoiseLOD.value();
+            inputHNoiseLOD.value(hNoiseLOD);
+        });
+        
+        inputHNoiseLOD = p.select("#hNoiseLODtxt");
+        inputHNoiseLOD.value(hNoiseLOD);
+        inputHNoiseLOD.changed(function(){
+            hNoiseLOD = inputHNoiseLOD.value();
+            sliderHNoiseLOD.value(hNoiseTimeLOD);
+        });
+        
+        sliderHNoiseFalloff = p.select("#hNoiseFalloff");
+        sliderHNoiseFalloff.value(hNoiseFalloff);
+        sliderHNoiseFalloff.changed(function(){
+            hNoiseFalloff = sliderHNoiseFalloff.value();
+            inputHNoiseFalloff.value(hNoiseFalloff);
+        });
+
+        inputHNoiseFalloff = p.select("#hNoiseFallofftxt");
+        inputHNoiseFalloff.value(hNoiseFalloff);
+        inputHNoiseFalloff.changed(function(){
+            hNoiseFalloff = inputHNoiseFalloff.value();
+            sliderHNoiseFalloff.value(hNoiseTimeFalloff);
+        });
 
         // S Noise Space
         // ----------------------------------
@@ -151,6 +185,36 @@ let sketch = function (p) {
             sNoiseTimeScale = inputSNoiseTime.value();
             sliderSNoiseTime.value(sNoiseTimeScale);
         });
+        
+        // S Noise Detail
+        // ----------------------------------
+        sliderSNoiseLOD = p.select("#sNoiseLOD");
+        sliderSNoiseLOD.value(sNoiseLOD);
+        sliderSNoiseLOD.changed(function(){
+            sNoiseLOD = sliderSNoiseLOD.value();
+            inputSNoiseLOD.value(sNoiseLOD);
+        });
+        
+        inputSNoiseLOD = p.select("#sNoiseLODtxt");
+        inputSNoiseLOD.value(sNoiseLOD);
+        inputSNoiseLOD.changed(function(){
+            sNoiseLOD = inputSNoiseLOD.value();
+            sliderSNoiseLOD.value(sNoiseLOD);
+        });
+        
+        sliderSNoiseFalloff = p.select("#sNoiseFalloff");
+        sliderSNoiseFalloff.value(sNoiseFalloff);
+        sliderSNoiseFalloff.changed(function(){
+            sNoiseFalloff = sliderSNoiseFalloff.value();
+            inputSNoiseFalloff.value(sNoiseFalloff);
+        });
+
+        inputSNoiseFalloff = p.select("#sNoiseFallofftxt");
+        inputSNoiseFalloff.value(sNoiseFalloff);
+        inputSNoiseFalloff.changed(function(){
+            sNoiseFalloff = inputSNoiseFalloff.value();
+            sliderSNoiseFalloff.value(sNoiseFalloff);
+        });
     }//end p.setup
 
     p.draw = function (g=p) {        
@@ -161,35 +225,39 @@ let sketch = function (p) {
         sNoiseTimeScale = sliderSNoiseTime.value();
 
         g.background(255);
+        
+        
      
         for(var i=0;i<nx; i++){
             for(var j=0;j<ny; j++){
                 var shixel = tabShixels[i+nx*j];
                 
+                p.noiseDetail(hNoiseLOD, hNoiseFalloff);
                 shixel.h = p.noise(
                     seedH+i*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale,
                     seedH+j*hNoiseSpaceScale+p.frameCount*hNoiseTimeScale
                 );
-
+                
+                p.noiseDetail(sNoiseLOD, sNoiseFalloff);
                 var shape = p.noise(
                     seedS+i*sNoiseSpaceScale+p.frameCount*sNoiseTimeScale,
                     seedS+j*sNoiseSpaceScale+p.frameCount*sNoiseTimeScale
                 );
 
 
-                if(shape<1/6.0){
+                if(shape<=1/6.0){
                     shixel.shape = SQUONUT;
                 }
-                else if(shape<2/6.0){
+                else if(shape<=2/6.0){
                     shixel.shape = TILES;
                 }
-                else if(shape<3/6.0){
+                else if(shape<=3/6.0){
                     shixel.shape = DONUT;
                 }
-                else if(shape<4/6.0){
+                else if(shape<=4/6.0){
                     shixel.shape = HOURGLASS;
                 }
-                else if(shape<5/6.0){
+                else if(shape<=5/6.0){
                     shixel.shape = BERRY;
                 }
                 else{
