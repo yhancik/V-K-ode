@@ -1,11 +1,5 @@
 var tabShixels = [];
 
-/*var nx = 48;
-var ny = 24;
-var rad = 20;
-var margin = 4;
-var mixedup = false;
-var blanks = false;*/
 var bwMode = false;
 var negativeMode = false;
 var bgColour = "#FFF";
@@ -51,7 +45,6 @@ let sketch = function (p) {
         
         grid.build();
         console.log(grid);
-        //p.buildGrid();
 
         seedH = p.random(7777777);
         seedS = p.random(7777777);
@@ -62,7 +55,6 @@ let sketch = function (p) {
         sliderNx = p.select("#nx");
         sliderNx.value(grid.nx);
         sliderNx.changed(function(){
-            //nx = sliderNx.value();
             inputNx.value(sliderNx.value());
             grid.build({horizontalElts:sliderNx.value()});
         });
@@ -70,7 +62,6 @@ let sketch = function (p) {
         inputNx = p.select("#nxtxt");
         inputNx.value(grid.ny);
         inputNx.changed(function(){
-            //nx = inputNx.value();
             sliderNx.value(inputNx.value());
             grid.build({horizontalElts:inputNx.value()});
         });
@@ -80,7 +71,6 @@ let sketch = function (p) {
         sliderNy = p.select("#ny");
         sliderNy.value(grid.ny);
         sliderNy.changed(function(){
-            //ny = sliderNy.value();
             inputNy.value(sliderNy.value());
             grid.build({verticalElts:sliderNy.value()});
         });
@@ -88,7 +78,6 @@ let sketch = function (p) {
         inputNy = p.select("#nytxt");
         inputNy.value(grid.ny);
         inputNy.changed(function(){
-            //ny = inputNy.value();
             sliderNy.value(inputNy.value());
             grid.build({verticalElts:inputNy.value()});
         });
@@ -98,7 +87,6 @@ let sketch = function (p) {
         sliderMargin = p.select("#margin");
         sliderMargin.value(grid.margin);
         sliderMargin.changed(function(){
-            //margin = sliderMargin.value();
             inputMargin.value(sliderMargin.value());
             grid.build({margin:sliderMargin.value()});
         });
@@ -106,7 +94,6 @@ let sketch = function (p) {
         inputMargin = p.select("#margintxt");
         inputMargin.value(grid.margin);
         inputMargin.changed(function(){
-            //margin = inputMargin.value();
             sliderMargin.value(inputMargin.value());
             grid.build({margin:inputMargin.value()});
         });
@@ -116,9 +103,6 @@ let sketch = function (p) {
         checkboxMixedup = p.select("#mixedup");
         checkboxMixedup.checked(grid.mixedup);
         checkboxMixedup.changed(function(){
-            //console.log(checkboxMixedup.checked());
-            //mixedup = checkboxMixedup.checked();
-            //p.buildGrid();
             grid.build({mixedup:checkboxMixedup.checked()});
         });
         
@@ -127,9 +111,6 @@ let sketch = function (p) {
         checkboxBlanks = p.select("#blanks");
         checkboxBlanks.checked(grid.blanks);
         checkboxBlanks.changed(function(){
-            console.log(checkboxBlanks.checked());
-            //blanks = checkboxBlanks.checked();
-            //p.buildGrid();
             grid.build({blanks:checkboxBlanks.checked()});
         });
         
@@ -295,56 +276,8 @@ let sketch = function (p) {
 
         g.background(bgColour);
         grid.draw(g);
-             
-        
 
     }//end p.draw
-
-    /*p.buildGrid = function (){
-        rad = (p.width - ((nx-1) * margin)) / (nx*2);
-        
-        tabShixels = [];
-        
-        if(!mixedup){
-            for(var j=0;j<ny; j++){
-                for(var i=0;i<nx; i++){
-                    var fillCol = "";
-                    if(bwMode){
-                       fillCol = p.color(2.55*p.abs(p.brightness(bgColour)-100));
-                    }
-                    
-                    var shixel = new Shapixel(
-                        p,
-                        TILES,
-                        rad+i*rad*2 + i*margin,
-                        rad+j*rad*2 + j*margin,
-                        rad,
-                        0.5,
-                        fillCol);
-                    tabShixels.push(shixel);
-                }
-            }
-        }
-        
-        else{
-            for(var i=0;i<nx; i++){
-                for(var j=0;j<ny; j++){
-                    var shixel = new Shapixel(
-                        p,
-                        TILES,
-                        rad+i*rad*2 + i*margin,
-                        rad+j*rad*2 + j*margin,
-                        rad,
-                        0.5,
-                        "");
-                    tabShixels.push(shixel);
-                }
-            }
-            
-        }
-        
-    }//end p.buildGrid
-    */
     
 };// end let sketch = function (p)
 
@@ -352,7 +285,6 @@ let sketch = function (p) {
 var p5can = new p5(sketch, "p5can");
 
 function saveToPNG(){
-    //p5can.draw();
     p5can.save("iMAL_"+Date.now()+".png");
 }
 
