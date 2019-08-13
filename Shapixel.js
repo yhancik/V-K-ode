@@ -34,213 +34,214 @@ class Shapixel {
         );
     }
 
-    draw() {
+    draw(g=this.p) {
         switch (this.shape) {
             case SQUONUT:
-                this.squonut();
+                this.squonut(g);
                 break;
             case TILES:
-                this.tiles();
+                this.tiles(g);
                 break;
             case DONUT:
-                this.donut();
+                this.donut(g);
                 break;
             case HOURGLASS:
-                this.hourglass();
+                this.hourglass(g);
                 break;
             case BERRY:
-                this.berry();
+                this.berry(g);
                 break;
             case DIAMOND:
-                this.diamond();
+                this.diamond(g);
                 break;
 
         }
     }
 
-    berry() {
-        this.p.noStroke();
+    berry(g) {
+        g.noStroke();
 
         if (this.col != "") {
-            this.p.fill(this.col);
+            g.fill(this.col);
         } else {
-            this.p.fill("#ff1c00");
+            g.fill("#ff1c00");
         }
 
-        this.p.push();
-        this.p.translate(this.x, this.y);
+        g.push();
+        g.translate(this.x, this.y);
         //fix, because the circles get out of the frame
-        this.p.circle(-0.5 * this.rad, -0.5 * this.rad, (0.5 + this.h) * this.rad);
-        this.p.circle(0.5 * this.rad, -0.5 * this.rad, (0.5 + this.h) * this.rad);
-        this.p.circle(-0.5 * this.rad, 0.5 * this.rad, (0.5 + this.h) * this.rad);
-        this.p.circle(0.5 * this.rad, 0.5 * this.rad, (0.5 + this.h) * this.rad);
-        this.p.pop();
+        g.circle(-0.5 * this.rad, -0.5 * this.rad, (0.5 + this.h) * this.rad);
+        g.circle(0.5 * this.rad, -0.5 * this.rad, (0.5 + this.h) * this.rad);
+        g.circle(-0.5 * this.rad, 0.5 * this.rad, (0.5 + this.h) * this.rad);
+        g.circle(0.5 * this.rad, 0.5 * this.rad, (0.5 + this.h) * this.rad);
+        g.pop();
     }
 
-    diamond(p) {
-        this.p.noStroke();
+    diamond(g) {
+        g.noStroke();
 
         if (this.col != "") {
-            this.p.fill(this.col);
+            g.fill(this.col);
         } else {
-            this.p.fill("#0036c4");
+            g.fill("#0036c4");
         }
 
-        this.p.push();
-        this.p.translate(this.x, this.y);
-        this.p.beginShape();
-        this.p.vertex(0, -this.rad + (0.5 * this.rad * this.h));
-        this.p.vertex(this.rad - (0.5 * this.rad * this.h), 0);
-        this.p.vertex(0, this.rad - (0.5 * this.rad * this.h));
-        this.p.vertex(-this.rad + (0.5 * this.rad * this.h), 0);
-        this.p.endShape();
-        this.p.pop();
+        g.push();
+        g.translate(this.x, this.y);
+        g.beginShape();
+        g.vertex(0, -this.rad + (0.5 * this.rad * this.h));
+        g.vertex(this.rad - (0.5 * this.rad * this.h), 0);
+        g.vertex(0, this.rad - (0.5 * this.rad * this.h));
+        g.vertex(-this.rad + (0.5 * this.rad * this.h), 0);
+        g.endShape();
+        g.pop();
     }
 
-    donut(p) {
-        this.p.noStroke();
+    donut(g) {
+        //console.log(g);
+        g.noStroke();
         
         if (this.col != "") {
-            this.p.fill(this.col);
+            g.fill(this.col);
         } else {
-            this.p.fill("#008fff");
+            g.fill("#008fff");
         }
 
         const c = 0.55191502449;
         
-        this.p.push();
-        this.p.translate(this.x, this.y);
-        this.p.beginShape();
-        this.p.vertex(0, this.rad);
+        g.push();
+        g.translate(this.x, this.y);
+        g.beginShape();
+        g.vertex(0, this.rad);
         
 
-        this.p.bezierVertex(
+        g.bezierVertex(
             c * this.rad, this.rad,
             this.rad, c * this.rad,
             this.rad, 0
         );
 
-        this.p.bezierVertex(
+        g.bezierVertex(
             this.rad, -c * this.rad,
             c * this.rad, -this.rad,
             0, -this.rad
         );
 
-        this.p.bezierVertex(-c * this.rad, -this.rad, -this.rad, -c * this.rad, -this.rad, 0);
+        g.bezierVertex(-c * this.rad, -this.rad, -this.rad, -c * this.rad, -this.rad, 0);
 
-        this.p.bezierVertex(-this.rad, c * this.rad, -c * this.rad, this.rad,
+        g.bezierVertex(-this.rad, c * this.rad, -c * this.rad, this.rad,
             0, this.rad
         );
 
 
-        this.p.beginContour();
-        this.p.vertex(0, this.rad * this.h);
+        g.beginContour();
+        g.vertex(0, this.rad * this.h);
 
-        this.p.bezierVertex(-c * this.rad * this.h, this.rad * this.h, -this.rad * this.h, c * this.rad * this.h, -this.rad * this.h, 0);
+        g.bezierVertex(-c * this.rad * this.h, this.rad * this.h, -this.rad * this.h, c * this.rad * this.h, -this.rad * this.h, 0);
 
-        this.p.bezierVertex(-this.rad * this.h, -c * this.rad * this.h, -c * this.rad * this.h, -this.rad * this.h,
+        g.bezierVertex(-this.rad * this.h, -c * this.rad * this.h, -c * this.rad * this.h, -this.rad * this.h,
             0, -this.rad * this.h
         );
 
-        this.p.bezierVertex(
+        g.bezierVertex(
             c * this.rad * this.h, -this.rad * this.h,
             this.rad * this.h, -c * this.rad * this.h,
             this.rad * this.h, 0
         );
 
-        this.p.bezierVertex(
+        g.bezierVertex(
             this.rad * this.h, c * this.rad * this.h,
             c * this.rad * this.h, this.rad * this.h,
             0, this.rad * this.h
         );
 
-        this.p.endContour();
+        g.endContour();
 
-        this.p.endShape();
+        g.endShape();
 
-        this.p.pop();
+        g.pop();
     }
 
-    hourglass(p) {
-        this.p.noStroke();
+    hourglass(g) {
+        g.noStroke();
         
         if (this.col != "") {
-            this.p.fill(this.col);
+            g.fill(this.col);
         } else {
-            this.p.fill("#ff009c");
+            g.fill("#ff009c");
         }
 
-        this.p.push();
-        this.p.translate(this.x, this.y);
-        this.p.beginShape();
-        this.p.vertex(-this.rad, -this.rad);
-        this.p.vertex(this.rad, -this.rad);
-        this.p.vertex(0, (this.h - 0.5) * this.rad);
-        this.p.endShape();
-        this.p.beginShape();
-        this.p.vertex(0, (0.5 - this.h) * this.rad);
-        this.p.vertex(this.rad, this.rad);
-        this.p.vertex(-this.rad, this.rad);
-        this.p.endShape();
+        g.push();
+        g.translate(this.x, this.y);
+        g.beginShape();
+        g.vertex(-this.rad, -this.rad);
+        g.vertex(this.rad, -this.rad);
+        g.vertex(0, (this.h - 0.5) * this.rad);
+        g.endShape();
+        g.beginShape();
+        g.vertex(0, (0.5 - this.h) * this.rad);
+        g.vertex(this.rad, this.rad);
+        g.vertex(-this.rad, this.rad);
+        g.endShape();
 
-        this.p.pop();
+        g.pop();
     }
 
-    squonut(p) {
-        this.p.noStroke();
+    squonut(g) {
+        g.noStroke();
         
         if (this.col != "") {
-            this.p.fill(this.col);
+            g.fill(this.col);
         } else {
-            this.p.fill("#ffeb00");
+            g.fill("#ffeb00");
         }
 
-        this.p.push();
-        this.p.translate(this.x, this.y);
-        this.p.beginShape();
-        this.p.vertex(-this.rad, -this.rad);
-        this.p.vertex(this.rad, -this.rad);
-        this.p.vertex(this.rad, this.rad);
-        this.p.vertex(-this.rad, this.rad);
+        g.push();
+        g.translate(this.x, this.y);
+        g.beginShape();
+        g.vertex(-this.rad, -this.rad);
+        g.vertex(this.rad, -this.rad);
+        g.vertex(this.rad, this.rad);
+        g.vertex(-this.rad, this.rad);
 
-        this.p.beginContour();
-        this.p.vertex(-this.rad * this.h, -this.rad * this.h);
-        this.p.vertex(-this.rad * this.h, this.rad * this.h);
-        this.p.vertex(this.rad * this.h, this.rad * this.h);
-        this.p.vertex(this.rad * this.h, -this.rad * this.h);
-        this.p.endContour();
+        g.beginContour();
+        g.vertex(-this.rad * this.h, -this.rad * this.h);
+        g.vertex(-this.rad * this.h, this.rad * this.h);
+        g.vertex(this.rad * this.h, this.rad * this.h);
+        g.vertex(this.rad * this.h, -this.rad * this.h);
+        g.endContour();
 
-        this.p.endShape();
+        g.endShape();
 
-        this.p.pop();
+        g.pop();
     }
 
-    tiles(p) {
-        this.p.noStroke();
+    tiles(g) {
+        g.noStroke();
         
         if (this.col != "") {
-            this.p.fill(this.col);
+            g.fill(this.col);
         } else {
-            this.p.fill("#00d400");
+            g.fill("#00d400");
         }
 
-        this.p.push();
-        this.p.translate(this.x, this.y);
-        this.p.beginShape();
-        this.p.vertex((0.5 - this.h) * this.rad, -this.rad);
-        this.p.vertex(this.rad, -this.rad);
-        this.p.vertex(this.rad, (this.h - 0.5) * this.rad);
-        this.p.vertex((0.5 - this.h) * this.rad, (this.h - 0.5) * this.rad);
-        this.p.endShape();
-        this.p.beginShape();
-        this.p.vertex((this.h - 0.5) * this.rad, (0.5 - this.h) * this.rad);
-        this.p.vertex(-this.rad, (0.5 - this.h) * this.rad);
-        this.p.vertex(-this.rad, this.rad);
-        this.p.vertex((this.h - 0.5) * this.rad, this.rad);
+        g.push();
+        g.translate(this.x, this.y);
+        g.beginShape();
+        g.vertex((0.5 - this.h) * this.rad, -this.rad);
+        g.vertex(this.rad, -this.rad);
+        g.vertex(this.rad, (this.h - 0.5) * this.rad);
+        g.vertex((0.5 - this.h) * this.rad, (this.h - 0.5) * this.rad);
+        g.endShape();
+        g.beginShape();
+        g.vertex((this.h - 0.5) * this.rad, (0.5 - this.h) * this.rad);
+        g.vertex(-this.rad, (0.5 - this.h) * this.rad);
+        g.vertex(-this.rad, this.rad);
+        g.vertex((this.h - 0.5) * this.rad, this.rad);
 
-        this.p.endShape();
+        g.endShape();
 
-        this.p.pop();
+        g.pop();
     }
 
 
