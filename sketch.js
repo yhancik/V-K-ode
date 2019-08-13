@@ -6,6 +6,9 @@ var rad = 20;
 var margin = 4;
 var mixedup = false;
 var blanks = false;
+var bwMode = false;
+var negativeMode = false;
+var bgColour = "#FFF";
 
 var hNoiseSpaceScale = 0.001;
 var hNoiseTimeScale = 0.001;
@@ -103,13 +106,38 @@ let sketch = function (p) {
             p.buildGrid();
         });
         
-        // mixedup
+        // blanks
         // ----------------------------------
         checkboxBlanks = p.select("#blanks");
         checkboxBlanks.checked(blanks);
         checkboxBlanks.changed(function(){
             blanks = checkboxBlanks.checked();
             p.buildGrid();
+        });
+        
+        // bwMode
+        // ----------------------------------
+        checkboxBW = p.select("#bwMode");
+        checkboxBW.checked(bwMode);
+        checkboxBW.changed(function(){
+            bwMode = checkboxBW.checked();
+            p.buildGrid();
+        });
+        
+        // bwMode
+        // ----------------------------------
+        checkboxNegative = p.select("#negative");
+        checkboxNegative.checked(negativeMode);
+        checkboxNegative.changed(function(){
+            negativeMode = checkboxNegative.checked();
+            if(negativeMode){
+                bgColour = "#000";
+            }
+            else{
+                bgColour = "#FFF";
+            }
+            p.buildGrid();
+            //p.buildGrid();
         });
 
         // H Noise Space
@@ -240,14 +268,16 @@ let sketch = function (p) {
     p.draw = function (g=p) {        
         hNoiseSpaceScale = sliderHNoiseSpace.value();
         hNoiseTimeScale = sliderHNoiseTime.value();
+        hNoiseLOD = sliderHNoiseLOD.value();
+        hNoiseFalloff = sliderHNoiseFalloff.value();
 
         sNoiseSpaceScale = sliderSNoiseSpace.value();
         sNoiseTimeScale = sliderSNoiseTime.value();
+        sNoiseLOD = sliderSNoiseLOD.value();
+        sNoiseFalloff = sliderSNoiseFalloff.value();
 
-        g.background(255);
-        
-        
-     
+        g.background(bgColour);
+             
         for(var i=0;i<nx; i++){
             for(var j=0;j<ny; j++){
                 var shixel = tabShixels[i+nx*j];
@@ -269,8 +299,6 @@ let sketch = function (p) {
                 if(blanks){
                     shape = 7.0/6.0 * shape;
                 }
-                    
-
 
                 if(shape<=1/6.0){
                     shixel.shape = SQUONUT;
@@ -304,12 +332,17 @@ let sketch = function (p) {
         rad = (p.width - ((nx-1) * margin)) / (nx*2);
         console.log(rad);
         console.log(nx*rad*2 + (nx-1)*margin);
-
+        
         tabShixels = [];
-
+        
         if(!mixedup){
             for(var j=0;j<ny; j++){
                 for(var i=0;i<nx; i++){
+                    var fillCol = "";
+                    if(bwMode){
+                       fillCol = p.color(2.55*p.abs(p.brightness(bgColour)-100));
+                    }
+                    
                     var shixel = new Shapixel(
                         p,
                         TILES,
@@ -317,11 +350,12 @@ let sketch = function (p) {
                         rad+j*rad*2 + j*margin,
                         rad,
                         0.5,
-                        "");
+                        fillCol);
                     tabShixels.push(shixel);
                 }
             }
         }
+        
         else{
             for(var i=0;i<nx; i++){
                 for(var j=0;j<ny; j++){
@@ -345,7 +379,6 @@ let sketch = function (p) {
 
 // setting up the two contexts
 var p5can = new p5(sketch, "p5can");
-//var p5svg = new p5(sketch, "p5svg");
 
 function saveToPNG(){
     //p5can.draw();
