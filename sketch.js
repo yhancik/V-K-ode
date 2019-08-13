@@ -1,9 +1,10 @@
 var tabShixels = [];
 
 var nx = 48;
-var ny = 12;
+var ny = 24;
 var rad = 20;
 var margin = 2;
+var mixedup = false;
 
 var hNoiseSpaceScale = 0.001;
 var hNoiseTimeScale = 0.001;
@@ -89,6 +90,16 @@ let sketch = function (p) {
         inputMargin.changed(function(){
             margin = inputMargin.value();
             sliderMargin.value(inputMargin.value());
+            p.buildGrid();
+        });
+        
+        // mixedup
+        // ----------------------------------
+        checkboxMixedup = p.select("#mixedup");
+        checkboxMixedup.checked(mixedup);
+        checkboxMixedup.changed(function(){
+            console.log(checkboxMixedup.checked());
+            mixedup = checkboxMixedup.checked();
             p.buildGrid();
         });
 
@@ -277,19 +288,38 @@ let sketch = function (p) {
 
         tabShixels = [];
 
-        for(var j=0;j<ny; j++){
-            for(var i=0;i<nx; i++){
-                var shixel = new Shapixel(
-                    p,
-                    TILES,
-                    rad+i*rad*2 + i*margin,
-                    rad+j*rad*2 + j*margin,
-                    rad,
-                    0.5,
-                    "");
-                tabShixels.push(shixel);
+        if(!mixedup){
+            for(var j=0;j<ny; j++){
+                for(var i=0;i<nx; i++){
+                    var shixel = new Shapixel(
+                        p,
+                        TILES,
+                        rad+i*rad*2 + i*margin,
+                        rad+j*rad*2 + j*margin,
+                        rad,
+                        0.5,
+                        "");
+                    tabShixels.push(shixel);
+                }
             }
         }
+        else{
+            for(var i=0;i<nx; i++){
+                for(var j=0;j<ny; j++){
+                    var shixel = new Shapixel(
+                        p,
+                        TILES,
+                        rad+i*rad*2 + i*margin,
+                        rad+j*rad*2 + j*margin,
+                        rad,
+                        0.5,
+                        "");
+                    tabShixels.push(shixel);
+                }
+            }
+            
+        }
+        
     }//end p.buildGrid
     
 };// end let sketch = function (p)
