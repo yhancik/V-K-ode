@@ -1,7 +1,7 @@
 var tabShixels = [];
 
-var nx = 10;
-var ny = 10;
+var nx = 48;
+var ny = 12;
 var rad = 20;
 var margin = 2;
 
@@ -10,7 +10,7 @@ var hNoiseTimeScale = 0.001;
 var hNoiseLOD = 4.0;
 var hNoiseFalloff = 0.5;
 
-var sNoiseSpaceScale = 0.001;
+var sNoiseSpaceScale = 0.018;
 var sNoiseTimeScale = 0.001;
 var sNoiseLOD = 4.0;
 var sNoiseFalloff = 0.5;
@@ -271,12 +271,14 @@ let sketch = function (p) {
     }//end p.draw
 
     p.buildGrid = function (){
-        rad = (p.width - ((nx-1) * margin)) / nx;
+        rad = (p.width - ((nx-1) * margin)) / (nx*2);
+        console.log(rad);
+        console.log(nx*rad*2 + (nx-1)*margin);
 
         tabShixels = [];
 
-        for(var i=0;i<nx; i++){
-            for(var j=0;j<ny; j++){
+        for(var j=0;j<ny; j++){
+            for(var i=0;i<nx; i++){
                 var shixel = new Shapixel(
                     p,
                     TILES,
