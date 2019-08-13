@@ -3,8 +3,9 @@ var tabShixels = [];
 var nx = 48;
 var ny = 24;
 var rad = 20;
-var margin = 2;
+var margin = 4;
 var mixedup = false;
+var blanks = false;
 
 var hNoiseSpaceScale = 0.001;
 var hNoiseTimeScale = 0.001;
@@ -98,8 +99,16 @@ let sketch = function (p) {
         checkboxMixedup = p.select("#mixedup");
         checkboxMixedup.checked(mixedup);
         checkboxMixedup.changed(function(){
-            console.log(checkboxMixedup.checked());
             mixedup = checkboxMixedup.checked();
+            p.buildGrid();
+        });
+        
+        // mixedup
+        // ----------------------------------
+        checkboxBlanks = p.select("#blanks");
+        checkboxBlanks.checked(blanks);
+        checkboxBlanks.changed(function(){
+            blanks = checkboxBlanks.checked();
             p.buildGrid();
         });
 
@@ -254,6 +263,13 @@ let sketch = function (p) {
                     seedS+i*sNoiseSpaceScale+p.frameCount*sNoiseTimeScale,
                     seedS+j*sNoiseSpaceScale+p.frameCount*sNoiseTimeScale
                 );
+                
+                // number of possible shapes
+                // "blanks" are an additional shape
+                if(blanks){
+                    shape = 7.0/6.0 * shape;
+                }
+                    
 
 
                 if(shape<=1/6.0){
@@ -271,8 +287,11 @@ let sketch = function (p) {
                 else if(shape<=5/6.0){
                     shixel.shape = BERRY;
                 }
-                else{
+                else if(shape<=6/6.0){
                     shixel.shape = DIAMOND;
+                }
+                else{
+                    shixel.shape = BLANK;
                 }
 
                 shixel.draw(g);

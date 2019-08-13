@@ -4,6 +4,7 @@ const DONUT = 2;
 const HOURGLASS = 3;
 const BERRY = 4;
 const DIAMOND = 5;
+const BLANK = 6;
 
 class Shapixel {
     constructor(p, shape, x, y, rad, h, col) {
@@ -36,7 +37,9 @@ class Shapixel {
             case DIAMOND:
                 this.diamond(g);
                 break;
-
+            case BLANK:
+                //do nothing
+                break;
         }
     }
 
