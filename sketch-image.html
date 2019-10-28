@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vkodetesting</title>
+    <link rel="stylesheet" href="css.css">
+    <script src="p5.min.js"></script>
+    <script src="p5.dom.min.js"></script>
+    <script src="p5.svg.js"></script>
+    <script src="sketch-image-Grid.js"></script>
+    <script src="Shapixel.js"></script>
+    <script src="sketch-image.js"></script>
+</head>
+
+<body>
+    <div class=controlSet>
+            <h3>Grid</h3>
+        
+            <div class=control>
+                <label for=zoom>Zoom</label>
+                <input type="range" min="1" max="25" id=zoom>
+                <input type="text" id="zoomtxt" value="" size="3">
+            </div>
+        
+            <div class=control>
+                <label for=sampling>Sample every </label>
+                <input type="range" min="1" max="100" id=sampling>
+                <input type="text" id="samplingtxt" value="" size="3">
+                <label for=sampling>pixels</label>
+            </div>
+
+            <div class=control>
+                <label for=margin>Margin</label>
+                <input type="range" min="0" max="16" id=margin>
+                <input type="text" id="margintxt" value="" size="3">
+            </div>
+        
+            <div class=control>
+                <label for=margin>Mixed-up mode!</label>
+                <input type="checkbox" id=mixedup>
+            </div>
+        
+            <div class=control>
+                <label for=margin>Allow empty pixels</label>
+                <input type="checkbox" id=blanks>
+            </div>
+        
+            <h3>Colours</h3>
+        
+            <div class=control>
+                <label for=margin>Black & white</label>
+                <input type="checkbox" id=bwMode>
+            </div>
+        
+            <div class=control>
+                <label for=margin>Negative</label>
+                <input type="checkbox" id=negative>
+            </div>
+        </div>
+        
+    <div class=controlSet>
+        <h3>Weight variations</h3>
+
+        <div class=control>
+            <label for=hNoiseSpace>Weight variation</label>
+            <input type="range" min="0" max="0.5" step="0.001" id=hNoiseSpace>
+            <input type="text" id="hNoiseSpacetxt" value="" size="3">
+        </div>
+        
+        <div class=control>
+            <label for=hNoiseTime>Speed</label>
+            <input type="range" min="0" max="0.5" step="0.001"  id=hNoiseTime>
+            <input type="text" id="hNoiseTimetxt" value="" size="3">
+        </div>
+        
+        <div class=control>
+            <label for=hNoiseLOD>Noise LOD</label>
+            <input type="range" min="0" max="4" step="1" id=hNoiseLOD>
+            <input type="text" id="hNoiseLODtxt" value="" size="3">
+        </div>
+        
+        <div class=control>
+            <label for=hNoiseFalloff>Noise falloff</label>
+            <input type="range" min="0" max="1.0" step="0.001"  id=hNoiseFalloff>
+            <input type="text" id="hNoiseFallofftxt" value="" size="3">
+        </div>
+    </div>
+        
+    <div class=controlSet>
+        <h3>Shape variations</h3>
+        
+        <div class=control>
+            <label for=sNoiseSpace>Shape noise - spacial scale</label>
+            <input type="range" min="0" max="0.5" step="0.001"  id=sNoiseSpace>
+            <input type="text" id="sNoiseSpacetxt" value="" size="3">
+        </div>
+        
+        <div class=control>
+            <label for=sNoiseTime>Shape noise - temporal scale</label>
+            <input type="range" min="0" max="0.5" step="0.001"  id=sNoiseTime>
+            <input type="text" id="sNoiseTimetxt" value="" size="3">
+        </div>
+        
+        <div class=control>
+            <label for=sNoiseLOD>Noise LOD</label>
+            <input type="range" min="0" max="4" step="1" id=sNoiseLOD>
+            <input type="text" id="sNoiseLODtxt" value="" size="3">
+        </div>
+        
+        <div class=control>
+            <label for=sNoiseFalloff>Noise falloff</label>
+            <input type="range" min="0" max="1.0" step="0.001"  id=sNoiseFalloff>
+            <input type="text" id="sNoiseFallofftxt" value="" size="3">
+        </div>
+    </div>
+    
+    <div class=controlSet>
+        <button onclick="saveToSVG()">Save SVG</button>
+        <button onclick="saveToPNG()">Save PNG</button>
+    </div>
+    
+    <div id="p5can" class="canvas" ></div>
+    <div id="p5svg" class="svg" style="display:xnone"></div>
+</body>
+
+</html>
