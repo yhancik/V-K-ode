@@ -67,7 +67,8 @@ class Grid {
         if(options.bwMode !== undefined)
             this.bwMode = options.bwMode;
         
-        this.blanks = options.blanks/* || this.blanks*/;
+        if(options.blanks !== undefined)
+            this.blanks = options.blanks;
         
         this.p.resizeCanvas(this.img.width*this.zoom, this.img.height*this.zoom);
         

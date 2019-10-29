@@ -36,7 +36,7 @@ let sketch = function (p) {
             }
         )
         
-        grid.build(img,img);
+        grid.build(img);
         
         // base shape
         // ----------------------------------
