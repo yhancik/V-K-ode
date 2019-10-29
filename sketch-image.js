@@ -21,23 +21,21 @@ var grid;
 let sketch = function (p) {
     
     p.preload = function () {
-        img = p.loadImage('srcyami.jpg');
+        img = p.loadImage('srctest.jpg');
     }
     
     
     p.setup = function () {
 
-        p.createCanvas(960, 600);
+        p.createCanvas(500, 500);
         
         //img.loadPixels();
         
         grid = new Grid(
             p, img, {
-                zoom: 1,
-                sampling: 16,
-                horizontalElts: 80,
-                verticalElts: 80,
-                margin: 2,
+                zoom: 3,
+                sampling: 4,
+                margin: 0,
                 mixedup: false,
                 blanks: false
             }
@@ -135,8 +133,8 @@ let sketch = function (p) {
     }//end p.setup
 
     p.draw = function (g=p) {        
-        g.background(bgColour);
-        grid.draw(g);
+        //g.background(bgColour);
+        //grid.draw(g);
 
     }//end p.draw
     
