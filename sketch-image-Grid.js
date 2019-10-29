@@ -3,14 +3,15 @@ class Grid {
         this.p = p;
         
         this.img = img;
-        
+        this.shape = 0;
         this.zoom = options.zoom || 1;
         this.sampling = options.sampling || 16;
         this.nx = Math.floor(img.width/this.sampling);
         this.ny = Math.floor(img.height/this.sampling);
         this.margin = options.margin || 4;
-        this.mixedup = options.mixedup || false;
+        this.negative = options.negative || false;
         this.blanks = options.blanks || false;
+        
         
         console.log(this.nx, this.ny);
         
@@ -22,29 +23,52 @@ class Grid {
         
         this.img.loadPixels();
         this.statusBuilding = false;
+        
+        if(options.varisize !== undefined)
+            this.varisize = options.varisize;
+        
+        if(options.variweight !== undefined)
+            this.variweight = options.variweight;
+        
+        if(options.varishape !== undefined)
+            this.varishape = options.varishape;
     }
     
     build(img, options={}){
+        console.log();
         this.statusBuilding = true;
-        
         this.img = img;
         
-        this.zoom = options.zoom || this.zoom;
-        this.sampling = options.sampling || this.sampling;
-        this.nx = Math.floor(img.width/this.sampling);
-        this.ny = Math.floor(img.height/this.sampling);
-        this.margin = options.margin || this.margin;
-        this.mixedup = options.mixedup/* || this.mixedup*/;
+        if(options.shape !== undefined)
+            this.shape = options.shape;
+        
+        if(options.zoom !== undefined)
+            this.zoom = options.zoom;
+        
+        if(options.sampling !== undefined)
+            this.sampling = options.sampling;
+        
+        if(options.margin !== undefined)
+            this.margin = options.margin;
+        
+        if(options.varisize !== undefined)
+            this.varisize = options.varisize;
+        
+        if(options.variweight !== undefined)
+            this.variweight = options.variweight;
+        
+        if(options.varishape !== undefined)
+            this.varishape = options.varishape;
+        
+        this.negative = options.negative/* || this.mixedup*/;
         this.blanks = options.blanks/* || this.blanks*/;
         
-        console.log(this.nx, this.ny);
-        
-        //this.rad = (this.p.width - ((this.nx-1) * this.margin)) / (this.nx*2);
-        //this.rad = min(this.p.width/this.zoom, )
         this.p.resizeCanvas(this.img.width*this.zoom, this.img.height*this.zoom);
         
-        this.rad = (this.sampling*this.zoom - this.margin)*0.5;
+        this.nx = Math.floor(img.width/this.sampling);
+        this.ny = Math.floor(img.height/this.sampling);
         
+        this.rad = (this.sampling*this.zoom - this.margin)*0.5;
         
         this.tabShixels = [];
         
@@ -56,32 +80,76 @@ class Grid {
            fillCol = this.p.color(2.55*this.p.abs(this.p.brightness(bgColour)-100));
         }
         
+        if(this.negative){
+                this.p.background("#000");
+            }
+        else{
+            this.p.background("#FFF");
+        }
 
         for(var j=0;j<this.ny; j++){
             for(var i=0;i<this.nx; i++){
                 var lumi = 
                     1.0 - this.p.brightness(this.img.get(i*this.sampling , j*this.sampling))/100.0;
+                if(this.negative)
+                    lumi = 1.0-lumi;
                 
                 var shixel = new Shapixel(
                     this.p, //p5.js
-                    DONUT, //shape
+                    this.shape, //shape
                     (i+1)*this.margin + (2*i+1)*this.rad, //x
                     (j+1)*this.margin + (2*j+1)*this.rad, //y
-                    lumi * this.rad, //rad
+                    this.rad, //rad
                     0.5, //weight
                     fillCol //col
                 );
+                
+                if(this.varisize){
+                    shixel.rad = lumi * this.rad;
+                }
+                
+                if(this.variweight){
+                    shixel.h = 1-lumi;
+                }
+                
+                if(this.varishape){
+                    if(this.blanks){
+                        lumi = 7.0/6.0 * lumi - 1/6.0;
+                    }
+                    
+                    if(lumi<0){
+                        shixel.shape = BLANK;
+                    }
+                    else if(lumi<=1/6.0){
+                        shixel.shape = DIAMOND;
+                    }
+                    else if(lumi<=2/6.0){
+                        shixel.shape = TILES;
+                    }
+                    else if(lumi<=3/6.0){
+                        shixel.shape = HOURGLASS;
+                    }
+                    else if(lumi<=4/6.0){
+                        shixel.shape = BERRY;
+                    }
+                    else if(lumi<=5/6.0){
+                        shixel.shape = DONUT;
+                    }
+                    else{
+                        shixel.shape = SQUONUT;
+                    }
+                }
+                
                 this.tabShixels.push(shixel);
             }
         }
 
         this.statusBuilding = false;
-        
+
         if(!this.statusBuilding){
             for(var i=0;i<this.nx; i++){
                 for(var j=0;j<this.ny; j++){
                     var shixel = this.get(i, j);
-
                     shixel.draw(this.p);
                 }
             }

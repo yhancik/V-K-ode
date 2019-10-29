@@ -18,6 +18,18 @@
     <div class=controlSet>
             <h3>Grid</h3>
         
+        <div class=control>
+            <label for="shape-select">Base shape</label>
+            <select name="shapes" id="shape-select">
+                <option value="0">Expo</option>
+                <option value="1">FabLab</option>
+                <option value="2">Forum</option>
+                <option value="3">Archive</option>
+                <option value="4">Workshop</option>
+                <option value="5">Residencies</option>
+            </select>
+        </div>
+        
             <div class=control>
                 <label for=zoom>Zoom</label>
                 <input type="range" min="1" max="25" id=zoom>
@@ -38,14 +50,28 @@
             </div>
         
             <div class=control>
-                <label for=margin>Mixed-up mode!</label>
-                <input type="checkbox" id=mixedup>
-            </div>
-        
-            <div class=control>
                 <label for=margin>Allow empty pixels</label>
                 <input type="checkbox" id=blanks>
             </div>
+        
+            <h3>Variations apply to</h3>
+        
+            <div class=control>
+                <input type="checkbox" id="variation-size">
+                <label for="variation-size">Shape size</label>
+            </div>
+        
+            <div class=control>
+                <input type="checkbox" id="variation-weight">
+                <label for="variation-weight">Shape "weight"</label>
+            </div>
+        
+            <div class=control>
+                <input type="checkbox" id="variation-shape">
+                <label for="variation-shape">Shape shape</label>
+            </div>
+        
+            
         
             <h3>Colours</h3>
         

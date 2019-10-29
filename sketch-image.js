@@ -21,7 +21,7 @@ var grid;
 let sketch = function (p) {
     
     p.preload = function () {
-        img = p.loadImage('srctest.jpg');
+        img = p.loadImage('mwant_inline.jpg');
     }
     
     
@@ -37,11 +37,20 @@ let sketch = function (p) {
                 sampling: 4,
                 margin: 0,
                 mixedup: false,
-                blanks: false
+                blanks: false,
+                varisize: true
             }
         )
         
         grid.build(img,img);
+        
+        // base shape
+        // ----------------------------------
+        inputShape = p.select("#shape-select");
+        inputShape.value(grid.shape);
+        inputShape.changed(function(){
+            grid.build(img,{shape:parseInt(inputShape.value())});
+        });
         
         // zoom
         // ----------------------------------
@@ -93,10 +102,35 @@ let sketch = function (p) {
         
         // mixedup
         // ----------------------------------
-        checkboxMixedup = p.select("#mixedup");
+        /*checkboxMixedup = p.select("#mixedup");
         checkboxMixedup.checked(grid.mixedup);
         checkboxMixedup.changed(function(){
             grid.build(img,{mixedup:checkboxMixedup.checked()});
+        });*/
+        
+        // VARIATIONS
+        // variation-size
+        // ----------------------------------
+        checkboxVarisize = p.select("#variation-size");
+        checkboxVarisize.checked(grid.varisize);
+        checkboxVarisize.changed(function(){
+            grid.build(img,{varisize:checkboxVarisize.checked()});
+        });
+        
+        // variation-weight
+        // ----------------------------------
+        checkboxVariweight = p.select("#variation-weight");
+        checkboxVariweight.checked(grid.variweight);
+        checkboxVariweight.changed(function(){
+            grid.build(img,{variweight:checkboxVariweight.checked()});
+        });
+        
+        // variation-shape
+        // ----------------------------------
+        checkboxVarishape = p.select("#variation-shape");
+        checkboxVarishape.checked(grid.varishape);
+        checkboxVarishape.changed(function(){
+            grid.build(img,{varishape:checkboxVarishape.checked()});
         });
         
         // blanks
@@ -121,14 +155,16 @@ let sketch = function (p) {
         checkboxNegative = p.select("#negative");
         checkboxNegative.checked(negativeMode);
         checkboxNegative.changed(function(){
-            negativeMode = checkboxNegative.checked();
+            grid.build(img,{negative:checkboxNegative.checked()});
+            
+            /*negativeMode = checkboxNegative.checked();
             if(negativeMode){
                 bgColour = "#000";
             }
             else{
                 bgColour = "#FFF";
             }
-            grid.build(img);
+            grid.build(img);*/
         });
     }//end p.setup
 
