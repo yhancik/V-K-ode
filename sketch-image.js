@@ -1,9 +1,5 @@
 var tabShixels = [];
 
-var bwMode = false;
-var negativeMode = false;
-var bgColour = "#FFF";
-
 var seedH;
 var seedS;
 
@@ -28,8 +24,6 @@ let sketch = function (p) {
     p.setup = function () {
 
         p.createCanvas(500, 500);
-        
-        //img.loadPixels();
         
         grid = new Grid(
             p, img, {
@@ -99,15 +93,7 @@ let sketch = function (p) {
             sliderMargin.value(inputMargin.value());
             grid.build(img,{margin:inputMargin.value()});
         });
-        
-        // mixedup
-        // ----------------------------------
-        /*checkboxMixedup = p.select("#mixedup");
-        checkboxMixedup.checked(grid.mixedup);
-        checkboxMixedup.changed(function(){
-            grid.build(img,{mixedup:checkboxMixedup.checked()});
-        });*/
-        
+                
         // VARIATIONS
         // variation-size
         // ----------------------------------
@@ -147,8 +133,6 @@ let sketch = function (p) {
         checkboxBW.checked(grid.bwMode);
         checkboxBW.changed(function(){
             grid.build(img,{bwMode:checkboxBW.checked()});
-            //bwMode = checkboxBW.checked();
-            //grid.build(img);
         });
         
         // negativeMode
@@ -157,22 +141,10 @@ let sketch = function (p) {
         checkboxNegative.checked(grid.negative);
         checkboxNegative.changed(function(){
             grid.build(img,{negative:checkboxNegative.checked()});
-            
-            /*negativeMode = checkboxNegative.checked();
-            if(negativeMode){
-                bgColour = "#000";
-            }
-            else{
-                bgColour = "#FFF";
-            }
-            grid.build(img);*/
         });
     }//end p.setup
 
     p.draw = function (g=p) {        
-        //g.background(bgColour);
-        //grid.draw(g);
-
     }//end p.draw
     
 };// end let sketch = function (p)

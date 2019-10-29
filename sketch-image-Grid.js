@@ -67,9 +67,7 @@ class Grid {
         if(options.bwMode !== undefined)
             this.bwMode = options.bwMode;
         
-        //this.negative = options.negative/* || this.mixedup*/;
         this.blanks = options.blanks/* || this.blanks*/;
-        //this.bwMode = options.bwMode;
         
         this.p.resizeCanvas(this.img.width*this.zoom, this.img.height*this.zoom);
         
@@ -83,10 +81,6 @@ class Grid {
         this.img.loadPixels();
         
         var fillCol = "";
-        
-        if(this.bwMode){
-           //fillCol = this.p.color(2.55*this.p.abs(this.p.brightness(bgColour)-100));
-        }
         
         if(this.negative){
             this.p.background("#000");
@@ -166,64 +160,6 @@ class Grid {
         }
     }
     
-    draw(g){
-        if(!this.statusBuilding){
-            for(var i=0;i<this.nx; i++){
-                for(var j=0;j<this.ny; j++){
-                    var shixel = this.get(i, j);
-
-                    shixel.draw(g);
-
-                    //var lumi = g.brightness(img.get(i+3*g.frameCount%this.nx,j+this.ny*g.floor(3*g.frameCount/this.nx)));
-
-                    //var lumi = g.brightness(this.img.get(i*this.img.width/this.nx , j*this.img.height/this.ny));
-
-                    //var lumi = g.brightness(this.img.get(i*this.sampling , j*this.sampling))/255.0;
-
-                    // number of possible shapes
-                    // "blanks" are an additional shape
-                    /*if(this.blanks){
-                        lumi = 7.0/6.0 * lumi;
-                    }
-
-                    if(lumi<=255*1/6.0){
-                        shixel.shape = SQUONUT;
-                    }
-                    else if(lumi<=255*2/6.0){
-                        shixel.shape = DONUT;
-                    }
-                    else if(lumi<=255*3/6.0){
-                        shixel.shape = BERRY;
-                    }
-                    else if(lumi<=255*4/6.0){
-                        shixel.shape = HOURGLASS;
-                    }
-                    else if(lumi<=255*5/6.0){
-                        shixel.shape = TILES;
-                    }
-                    else if(lumi<=255*6/6.0){
-                        shixel.shape = DIAMOND;
-                    }
-                    else{
-                        shixel.shape = BLANK;
-                    }
-
-                    shixel.draw(g);*/
-
-
-                    //shixel.h = 1.0 - lumi/255.0;
-                    //shixel.rad = (1.0-lumi/255.0) * (this.p.width - ((this.nx-1) * this.margin)) / (this.nx*2);
-
-                    /*if(lumi>50){
-                        shixel.shape = BLANK;
-                    }
-                    else{
-                        shixel.shape = BERRY;
-                    }*/
-                }
-            }
-        }
-    }
     
     get(x,y){
         return this.tabShixels[x+this.nx*y];
