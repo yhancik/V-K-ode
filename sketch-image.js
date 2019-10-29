@@ -144,16 +144,17 @@ let sketch = function (p) {
         // bwMode
         // ----------------------------------
         checkboxBW = p.select("#bwMode");
-        checkboxBW.checked(bwMode);
+        checkboxBW.checked(grid.bwMode);
         checkboxBW.changed(function(){
-            bwMode = checkboxBW.checked();
-            grid.build(img);
+            grid.build(img,{bwMode:checkboxBW.checked()});
+            //bwMode = checkboxBW.checked();
+            //grid.build(img);
         });
         
         // negativeMode
         // ----------------------------------
         checkboxNegative = p.select("#negative");
-        checkboxNegative.checked(negativeMode);
+        checkboxNegative.checked(grid.negative);
         checkboxNegative.changed(function(){
             grid.build(img,{negative:checkboxNegative.checked()});
             

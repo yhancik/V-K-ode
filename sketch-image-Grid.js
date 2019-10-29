@@ -10,6 +10,7 @@ class Grid {
         this.ny = Math.floor(img.height/this.sampling);
         this.margin = options.margin || 4;
         this.negative = options.negative || false;
+        this.bwMode = options.bwMode || false;
         this.blanks = options.blanks || false;
         
         
@@ -60,8 +61,15 @@ class Grid {
         if(options.varishape !== undefined)
             this.varishape = options.varishape;
         
-        this.negative = options.negative/* || this.mixedup*/;
+        if(options.negative !== undefined)
+            this.negative = options.negative;
+        
+        if(options.bwMode !== undefined)
+            this.bwMode = options.bwMode;
+        
+        //this.negative = options.negative/* || this.mixedup*/;
         this.blanks = options.blanks/* || this.blanks*/;
+        //this.bwMode = options.bwMode;
         
         this.p.resizeCanvas(this.img.width*this.zoom, this.img.height*this.zoom);
         
@@ -76,17 +84,19 @@ class Grid {
         
         var fillCol = "";
         
-        if(bwMode){
-           fillCol = this.p.color(2.55*this.p.abs(this.p.brightness(bgColour)-100));
+        if(this.bwMode){
+           //fillCol = this.p.color(2.55*this.p.abs(this.p.brightness(bgColour)-100));
         }
         
         if(this.negative){
-                this.p.background("#000");
-            }
+            this.p.background("#000");
+            if(this.bwMode) fillCol = "#FFF";
+        }
         else{
             this.p.background("#FFF");
+            if(this.bwMode) fillCol = "#000";
         }
-
+        
         for(var j=0;j<this.ny; j++){
             for(var i=0;i<this.nx; i++){
                 var lumi = 
