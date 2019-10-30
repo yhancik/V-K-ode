@@ -49,7 +49,7 @@ class Shapixel {
         if (this.col != "") {
             g.fill(this.col);
         } else {
-            g.fill("#ff1c00");
+            g.fill("#00d400");
         }
 
         g.push();
@@ -68,7 +68,7 @@ class Shapixel {
         if (this.col != "") {
             g.fill(this.col);
         } else {
-            g.fill("#0036c4");
+            g.fill("#ffeb00");
         }
 
         g.push();
@@ -89,7 +89,7 @@ class Shapixel {
         if (this.col != "") {
             g.fill(this.col);
         } else {
-            g.fill("#008fff");
+            g.fill("#ff009c");
         }
 
         const c = 0.55191502449;
@@ -153,7 +153,7 @@ class Shapixel {
         if (this.col != "") {
             g.fill(this.col);
         } else {
-            g.fill("#ff009c");
+            g.fill("#008fff");
         }
 
         g.push();
@@ -178,7 +178,7 @@ class Shapixel {
         if (this.col != "") {
             g.fill(this.col);
         } else {
-            g.fill("#ffeb00");
+            g.fill("rgb(0, 55, 196)");
         }
 
         g.push();
@@ -207,7 +207,7 @@ class Shapixel {
         if (this.col != "") {
             g.fill(this.col);
         } else {
-            g.fill("#00d400");
+            g.fill("#ff1c00");
         }
 
         g.push();
